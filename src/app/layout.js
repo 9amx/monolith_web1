@@ -5,9 +5,17 @@ import CustomCursor from '@/components/CustomCursor';
 import SmoothScroll from '@/components/SmoothScroll';
 
 export const metadata = {
+  metadataBase: new URL('https://monolithmedia.digital'),
   title: 'Monolith Media The Top Tier Video Editing Agency',
   description: 'Looking to hire a professional video editing agency? Monolith Media provides high-retention YouTube video editing, cinematic documentaries, shorts, and VSLs to help creators scale.',
   robots: 'max-image-preview:large',
+  openGraph: {
+    title: 'Monolith Media The Top Tier Video Editing Agency',
+    description: 'Looking to hire a professional video editing agency? Monolith Media provides high-retention YouTube video editing, cinematic documentaries, shorts, and VSLs to help creators scale.',
+    url: 'https://monolithmedia.digital',
+    siteName: 'Monolith Media',
+    type: 'website',
+  },
   icons: {
     icon: '/favicon.svg',
     apple: '/favicon.svg',
