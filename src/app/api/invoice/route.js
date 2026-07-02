@@ -5,7 +5,7 @@ import { db } from '@/db';
 import { submissions, cards } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 
-
+export async function POST(req) {
   try {
     const body = await req.json();
     const { clientName, clientEmail, videoLink, amount, profit } = body;
