@@ -1,0 +1,128 @@
+.container {
+  position: relative;
+  min-width: 140px;
+}
+
+.trigger {
+  background: var(--glass-1);
+  border: var(--glass-stroke);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  backdrop-filter: blur(var(--blur-md));
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trigger:focus {
+  border-color: var(--emerald-dim);
+  box-shadow: 0 0 0 2px var(--emerald-glow);
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 260px;
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  z-index: 50;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  font-family: var(--font-body);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.monthLabel {
+  font-weight: 600;
+  color: var(--text-white);
+  font-size: 0.95rem;
+}
+
+.navButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.navButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dayName {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 4px 0;
+  margin-bottom: 4px;
+}
+
+.dayCellEmpty {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.dayCell {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dayCell:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+}
+
+.dayCell.today {
+  color: var(--emerald-bright);
+  font-weight: 600;
+  background: rgba(52, 211, 153, 0.1);
+}
+
+.dayCell.selected {
+  background: var(--emerald);
+  color: var(--bg-void);
+  font-weight: 700;
+  box-shadow: 0 4px 12px var(--emerald-glow);
+}

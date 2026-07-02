@@ -1,0 +1,395 @@
+/* ============================================
+   APPLE LIQUID GLASS — ANIMATIONS (PERF-OPTIMIZED)
+   GPU-only: transform + opacity only. Zero layout.
+   ============================================ */
+
+/* ---------- Custom Cursor — Glass Style ---------- */
+body { cursor: none; }
+
+.custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  background: rgba(52,211,153,0.9);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  /* Use translate3d – always GPU composited */
+  transform: translate3d(-50%,-50%,0);
+  will-change: transform;
+  transition: width 0.3s cubic-bezier(0.25,0.46,0.45,0.94),
+              height 0.3s cubic-bezier(0.25,0.46,0.45,0.94),
+              opacity 0.3s;
+}
+
+.custom-cursor.hovering {
+  width: 42px; height: 42px;
+  background: rgba(52,211,153,0.10);
+  border: 1px solid rgba(52,211,153,0.45);
+  /* NO box-shadow on hover state — causes repaints */
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  top: 0; left: 0;
+  width: 34px; height: 34px;
+  border: 1px solid rgba(52,211,153,0.22);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate3d(-50%,-50%,0);
+  will-change: transform;
+  /* NO backdrop-filter — it repaints on every mousemove */
+  transition: width 0.4s cubic-bezier(0.16,1,0.3,1),
+              height 0.4s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.4s;
+}
+
+.custom-cursor-follower.hovering {
+  width: 65px; height: 65px;
+  border-color: rgba(52,211,153,0.10);
+}
+
+/* Hide on touch devices */
+@media (max-width: 768px) {
+  .custom-cursor, .custom-cursor-follower { display:none !important; }
+  body { cursor: auto; }
+}
+
+/* ---------- Scroll Progress Bar ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(52,211,153,0.5), #34d399, rgba(110,231,183,0.85));
+  z-index: 10000;
+  border-radius: 0 2px 2px 0;
+  /* width updated via JS – keep transition fast */
+  transition: width 0.08s linear;
+  /* Static glow via pseudo – no animation */
+  box-shadow: 0 0 8px rgba(52,211,153,0.35);
+}
+
+/* ---------- Ambient Bokeh Orbs ---------- */
+.hero__floating-element {
+  position: fixed; /* fixed = off layout flow entirely */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform; /* hint GPU layer */
+  /* blur applied via pseudo-element to isolate repaint */
+}
+
+.hero__floating-element--1 {
+  width: 420px; height: 420px;
+  top: 0; left: 0;
+  background: radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 60%);
+  filter: blur(50px);
+  /* Pure transform-only animation = zero repaints */
+  animation: bokehDrift1 16s ease-in-out infinite alternate;
+  transform: translate3d(5vw, 8vh, 0);
+}
+
+.hero__floating-element--2 {
+  width: 560px; height: 560px;
+  bottom: 0; right: 0;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 60%);
+  filter: blur(70px);
+  animation: bokehDrift2 22s ease-in-out infinite alternate-reverse;
+  transform: translate3d(-5vw, -8vh, 0);
+}
+
+/* Keyframes use only transform – no layout, no paint */
+@keyframes bokehDrift1 {
+  0%   { transform: translate3d(5vw,   8vh,  0) scale(1);    }
+  33%  { transform: translate3d(8vw,   3vh,  0) scale(1.07); }
+  66%  { transform: translate3d(3vw,  12vh,  0) scale(0.95); }
+  100% { transform: translate3d(9vw,   6vh,  0) scale(1.03); }
+}
+@keyframes bokehDrift2 {
+  0%   { transform: translate3d(-5vw,  -8vh, 0) scale(1);    }
+  33%  { transform: translate3d(-9vw,  -3vh, 0) scale(1.09); }
+  66%  { transform: translate3d(-3vw, -13vh, 0) scale(0.93); }
+  100% { transform: translate3d(-8vw,  -6vh, 0) scale(1.04); }
+}
+
+/* ---------- Glass Card Shimmer — GPU ONLY ---------- */
+/* KEY FIX: use translateX instead of left — zero layout reflow */
+.tilt-card {
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+
+.tilt-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;          /* stays 0 always */
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0.06) 45%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.06) 55%,
+    rgba(255,255,255,0)    100%
+  );
+  transform: translateX(-220%) skewX(-15deg);
+  /* Only transform changes — GPU composited */
+  transition: transform 0.85s cubic-bezier(0.16,1,0.3,1);
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.tilt-card:hover::before {
+  transform: translateX(280%) skewX(-15deg);
+}
+
+/* ---------- Magnetic Button Wrapper ---------- */
+.magnetic-wrap { display: inline-block; position: relative; }
+
+/* ---------- Text Reveal (char-by-char) ---------- */
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+  /* Start state set by GSAP — no CSS animation needed */
+}
+
+/* ---------- Hero z-index ---------- */
+.hero { position: relative; z-index: 1; }
+
+/* ---------- About ambient glow — opacity only ---------- */
+.about { position: relative; }
+
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 45vw; height: 45vw;
+  background: radial-gradient(circle, rgba(52,211,153,0.05) 0%, transparent 60%);
+  transform: translate3d(30%,-20%,0);
+  pointer-events: none;
+  z-index: 0;
+  /* Animate ONLY opacity — no transform change = no layout */
+  animation: ambientPulse 10s ease-in-out infinite alternate;
+  filter: blur(30px);
+}
+
+@keyframes ambientPulse {
+  from { opacity: 0.4; }
+  to   { opacity: 0.9; }
+}
+
+/* ---------- Section Background Bokeh — opacity only ---------- */
+.stats::before,
+.services::before,
+.reviews::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate3d(-50%,-50%,0);
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(52,211,153,0.025) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  /* Opacity-only animation — zero paint cost */
+  animation: ambientPulse 18s ease-in-out infinite alternate;
+  filter: blur(40px);
+}
+.stats, .services, .reviews { position: relative; }
+
+/* ---------- Navbar Glass on Scroll ---------- */
+.navbar.scrolled {
+  background: rgba(3,5,8,0.80);
+  /* Only background-color changes — GPU compositable */
+}
+
+/* ---------- CTA Glowing Pulse Effect ---------- */
+.btn-primary {
+  position: relative;
+  isolation: isolate;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(52,211,153,0.3), rgba(16,185,129,0.5), rgba(52,211,153,0.3));
+  background-size: 200% auto;
+  z-index: -1;
+  opacity: 0.7;
+  filter: blur(12px);
+  animation: btnPulse 3s linear infinite;
+  transition: opacity 0.3s;
+}
+.btn-primary:hover::before {
+  opacity: 1;
+  filter: blur(16px);
+}
+@keyframes btnPulse {
+  0% { background-position: 0% center; transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { background-position: 200% center; transform: scale(1); }
+}
+
+/* ---------- Custom Video Cinematic Hover Zoom ---------- */
+.works__video-wrapper {
+  overflow: hidden; /* Ensure zoom stays within box */
+}
+.custom-video__thumb {
+  transition: transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1);
+  will-change: transform;
+}
+.works__video-wrapper:hover .custom-video__thumb {
+  transform: scale(1.08);
+}
+
+/* ---------- FAQ Spring Open ---------- */
+@keyframes faqSlideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.faq__item.active .faq__answer-inner {
+  animation: faqSlideDown 0.45s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+
+/* ---------- Stat Number Shimmer — transform-based ---------- */
+/* background-position animation is composited on modern browsers */
+@keyframes statShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.stat__number {
+  background-size: 300% auto;
+  animation: statShimmer 5s linear infinite;
+}
+
+/* ---------- Icon subtle breathe — opacity only ---------- */
+@keyframes iconGlow {
+  from { opacity: 0.7; }
+  to   { opacity: 1;   }
+}
+.service-card:hover .service-card__icon {
+  animation: iconGlow 2s ease-in-out infinite alternate;
+}
+
+/* ---------- Contact wrapper — NO box-shadow animation ---------- */
+/* Static beautiful look, no repaint loop */
+
+/* ---------- Page load entrance — opacity + transform ---------- */
+/* Applied to wrapper div, not body, to avoid full-page repaints */
+@keyframes pageEntrance {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-wrapper {
+  animation: pageEntrance 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  will-change: transform, opacity;
+}
+
+/* ---------- GPU layer for key animated elements ---------- */
+.stat,
+.service-card,
+.client-card,
+.approach__step,
+.review-card,
+.work-card,
+.comparison__card,
+.faq__item,
+.about__image-box {
+  transform: translateZ(0); /* Force GPU composite layer */
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* ---------- Card shimmer sweep — translateX NOT left ---------- */
+.service-card,
+.client-card,
+.stat,
+.approach__step,
+.faq__item {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::after,
+.client-card::after,
+.stat::after,
+.approach__step::after,
+.faq__item::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; /* always left:0 — never changes */
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0.05) 45%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.05) 55%,
+    rgba(255,255,255,0)    100%
+  );
+  transform: translateX(-200%) skewX(-10deg); /* GPU composited */
+  transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform;
+}
+
+.service-card:hover::after,
+.client-card:hover::after,
+.stat:hover::after,
+.approach__step:hover::after,
+.faq__item:hover::after {
+  transform: translateX(280%) skewX(-10deg);
+}
+
+/* ---------- Play button — outline pulse (NO box-shadow animation) ---------- */
+/* Use ::after pseudo for the ring so it stays on its own GPU layer */
+.showreel__play {
+  position: relative;
+  isolation: isolate;
+}
+
+.showreel__play::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(52,211,153,0.5);
+  animation: ringPulse 2.5s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes ringPulse {
+  0%   { transform: scale(1);    opacity: 0.8; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* ---------- Scroll-triggered fades — will-change hint ---------- */
+.anim-fade-up,
+.anim-fade-left,
+.anim-fade-right,
+.anim-zoom {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* ---------- Smooth transitions on hover lift ---------- */
+.stat:hover,
+.service-card:hover,
+.client-card:hover,
+.approach__step:hover,
+.faq__item:hover,
+.about__image-box:hover,
+.work-card:hover,
+.comparison__card:hover {
+  /* translateY already defined in styles.css — ensure GPU */
+  will-change: transform;
+}

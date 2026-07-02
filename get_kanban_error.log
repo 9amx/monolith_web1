@@ -1,0 +1,28 @@
+Error: Failed query: select "id", "email", "username", "name", "role", "password", "avatar_url", "has_dashboard_access", "created_at" from "users" where "users"."id" = $1
+params: 1
+    at NeonHttpPreparedQuery.queryWithCache (webpack-internal:///(action-browser)/./node_modules/drizzle-orm/pg-core/session.js:53:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async NeonHttpPreparedQuery.execute (webpack-internal:///(action-browser)/./node_modules/drizzle-orm/neon-http/session.js:57:20)
+    at async getCurrentUser (webpack-internal:///(action-browser)/./src/actions/auth.js:161:22)
+    at async getKanbanData (webpack-internal:///(action-browser)/./src/actions/kanban.js:76:22)
+    at async executeActionAndPrepareForRender (D:\Monolith\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:34:3117)
+    at async D:\Monolith\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:34:958
+    at async handleAction (D:\Monolith\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:32:22838)
+    at async renderToHTMLOrFlightImpl (D:\Monolith\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:40020)
+    at async doRender (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fprojects%2Fpage&page=%2Fprojects%2Fpage&appPaths=%2Fprojects%2Fpage&pagePath=private-next-app-dir%2Fprojects%2Fpage.js&appDir=D%3A%5CMonolith%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=D%3A%5CMonolith&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:424:28)
+    at async AppPageRouteModule.handleResponse (D:\Monolith\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:41:57424)
+    at async handleResponse (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fprojects%2Fpage&page=%2Fprojects%2Fpage&appPaths=%2Fprojects%2Fpage&pagePath=private-next-app-dir%2Fprojects%2Fpage.js&appDir=D%3A%5CMonolith%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=D%3A%5CMonolith&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:576:32)
+    at async handler (webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fprojects%2Fpage&page=%2Fprojects%2Fpage&appPaths=%2Fprojects%2Fpage&pagePath=private-next-app-dir%2Fprojects%2Fpage.js&appDir=D%3A%5CMonolith%5Csrc%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=D%3A%5CMonolith&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D&isGlobalNotFoundEnabled=!:954:20)
+    at async DevServer.renderToResponseWithComponentsImpl (D:\Monolith\node_modules\next\dist\server\base-server.js:1430:9)
+    at async DevServer.renderPageComponent (D:\Monolith\node_modules\next\dist\server\base-server.js:1482:24)
+    at async DevServer.renderToResponseImpl (D:\Monolith\node_modules\next\dist\server\base-server.js:1522:32)
+    at async DevServer.pipeImpl (D:\Monolith\node_modules\next\dist\server\base-server.js:1026:25)
+    at async NextNodeServer.handleCatchallRenderRequest (D:\Monolith\node_modules\next\dist\server\next-server.js:394:17)
+    at async DevServer.handleRequestImpl (D:\Monolith\node_modules\next\dist\server\base-server.js:917:17)
+    at async D:\Monolith\node_modules\next\dist\server\dev\next-dev-server.js:400:20
+    at async Span.traceAsyncFn (D:\Monolith\node_modules\next\dist\trace\trace.js:157:20)
+    at async DevServer.handleRequest (D:\Monolith\node_modules\next\dist\server\dev\next-dev-server.js:396:24)
+    at async invokeRender (D:\Monolith\node_modules\next\dist\server\lib\router-server.js:240:21)
+    at async handleRequest (D:\Monolith\node_modules\next\dist\server\lib\router-server.js:437:24)
+    at async requestHandlerImpl (D:\Monolith\node_modules\next\dist\server\lib\router-server.js:485:13)
+    at async Server.requestListener (D:\Monolith\node_modules\next\dist\server\lib\start-server.js:226:13)

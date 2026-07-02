@@ -1,0 +1,678 @@
+.pageContainer {
+  min-height: 100vh;
+  padding: 120px 20px 60px;
+  background-color: transparent;
+  color: var(--text-white);
+  font-family: var(--font-body);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--text-white) 0%, rgba(240, 244, 255, 0.4) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- Filter Section --- */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.customSelectContainer {
+  position: relative;
+  min-width: 220px;
+}
+
+.filterSelect {
+  background: var(--glass-1);
+  border: var(--glass-stroke);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-weight: 500;
+  backdrop-filter: blur(var(--blur-md));
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterSelect:focus {
+  border-color: var(--emerald-dim);
+  box-shadow: 0 0 0 2px var(--emerald-glow);
+}
+
+.customSelectDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 0;
+  z-index: 50;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.customSelectDropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.customSelectDropdown::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+
+.customSelectOption {
+  padding: 10px 16px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.customSelectOption:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-white);
+}
+
+.customSelectOption.selected {
+  background: rgba(52, 211, 153, 0.1);
+  color: var(--emerald-bright);
+}
+
+.customDateGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dateInput {
+  background: var(--glass-1);
+  border: var(--glass-stroke);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  outline: none;
+  backdrop-filter: blur(var(--blur-md));
+  transition: var(--transition-fast);
+  color-scheme: dark;
+}
+
+.dateInput::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.dateInput:focus {
+  border-color: var(--emerald-dim);
+}
+
+.dateSeparator {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* --- Bento Grid Section --- */
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 3rem auto;
+}
+
+.metricCard {
+  grid-column: span 4;
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 2rem;
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+              0 20px 40px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 200px;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .metricCard { grid-column: span 12; }
+}
+
+.metricCard:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+              0 30px 60px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+/* Glowing Aura on Hover */
+.metricCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(52, 211, 153, 0.15), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: -2;
+}
+.metricCard.profit::before { background: radial-gradient(circle at center, rgba(168, 85, 247, 0.15), transparent 60%); }
+.metricCard.editor::before { background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15), transparent 60%); }
+.metricCard:hover::before { opacity: 1; }
+
+.metricLabel {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  z-index: 10;
+}
+
+.metricValue {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0;
+  line-height: 1;
+  position: relative;
+  z-index: 10;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.metricValue span {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  margin-right: 4px;
+}
+
+/* Sparklines */
+.sparkline {
+  position: absolute;
+  bottom: -10px;
+  left: -5%;
+  width: 110%;
+  height: 60%;
+  pointer-events: none;
+  opacity: 0.2;
+  transition: opacity 0.4s;
+  z-index: -1;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+.metricCard:hover .sparkline {
+  opacity: 0.6;
+}
+
+.sparklinePath {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawLine 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --- Form & Grid --- */
+.addForm {
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 2rem;
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.4);
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  transition: all 0.3s;
+}
+
+.addForm:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 1rem 0.5rem;
+  border-radius: 12px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  font-size: 1rem;
+}
+
+.input option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.input:focus, .input:not(:placeholder-shown) {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left top;
+}
+
+.input:focus + .label, .input:not(:placeholder-shown) + .label {
+  transform: translateY(-0.6rem) scale(0.75);
+  color: var(--emerald-bright);
+}
+
+.button {
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dim));
+  color: var(--bg-void);
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 24px rgba(52, 211, 153, 0.2);
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(52, 211, 153, 0.4);
+  filter: brightness(1.1);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.clientsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.clientCard {
+  background: rgba(20, 20, 20, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  backdrop-filter: blur(24px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clientCard:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.clientHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem;
+}
+
+.removeButton {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.5;
+}
+
+.clientCard:hover .removeButton {
+  opacity: 1;
+}
+
+.removeButton:hover {
+  background: rgba(239, 68, 68, 0.15); /* Red tint */
+  color: #ef4444; /* Tailwind red-500 */
+}
+
+.clientName {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.5px;
+}
+
+.clientEmail {
+  font-size: 0.9rem;
+  color: var(--emerald-dim);
+  margin: 0;
+}
+
+.editButton {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.5;
+}
+
+.clientCard:hover .editButton {
+  opacity: 0.8;
+}
+
+.editButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  opacity: 1 !important;
+}
+
+.editEmailInput {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--emerald-dim);
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+}
+
+.editEmailInput:focus {
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 2px var(--emerald-glow);
+}
+
+.invoiceForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.message.success {
+  background: var(--emerald-soft);
+  border: 1px solid var(--emerald-dim);
+  color: var(--emerald-bright);
+}
+
+.message.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.tabBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2.5rem;
+  background: rgba(20, 20, 20, 0.4);
+  padding: 8px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tab {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.tab:hover {
+  color: var(--text-white);
+}
+
+.tab.active {
+  color: var(--bg-void);
+  font-weight: 600;
+}
+
+.activeTabIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dim));
+  border-radius: 100px;
+  z-index: -1;
+  box-shadow: 0 4px 14px rgba(52, 211, 153, 0.3);
+}
+
+.tabIcon {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.margin { border-top: 4px solid #f59e0b; }
+.exportBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  padding: 0 1rem;
+  height: 42px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+.exportBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.exportBtn:active {
+  transform: scale(0.98);
+}
+
+.modernSearch {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.modernSearchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-grey);
+  pointer-events: none;
+  transition: color 0.3s;
+}
+
+.modernSearchInput {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text-white);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.modernSearchInput::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.modernSearchInput:focus {
+  border-color: rgba(52, 211, 153, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 0 0 4px rgba(52, 211, 153, 0.1);
+}
+
+.modernSearchInput:focus + .modernSearchIcon,
+.modernSearch:focus-within .modernSearchIcon {
+  color: var(--emerald);
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 100px 18px 60px;
+  }
+  .bentoGrid {
+    display: flex;
+    flex-direction: column;
+  }
+  .metricCard {
+    width: 100%;
+  }
+  .teamGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .exportBtn {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+  .customSelectContainer,
+  .modernSearch,
+  .customDateGroup {
+    width: 100%;
+    max-width: 100%;
+  }
+  .dateInput {
+    width: 100%;
+  }
+  .tabBar {
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 10px;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 12px;
+  }
+  .tabBar::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 16px;
+  }
+}
+@media (max-width: 480px) {
+  .pageContainer {
+    padding: 90px 14px 60px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .tabBar {
+    padding: 8px 8px;
+  }
+}

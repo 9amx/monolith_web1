@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Top-Tier Video Editing Agency for YouTube & Brands | Monolith Media</title>
+  <meta name="description"
+    content="Looking to hire a professional video editing agency? Monolith Media provides high-retention YouTube video editing, cinematic documentaries, shorts, and VSLs to help creators scale.">
+  <meta name="robots" content="max-image-preview:large">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Monolith Media",
+    "url": "https://monolithmedia.digital",
+    "description": "Monolith Media is a premium video editing agency founded by Alvi Karim, specializing in high-retention content for YouTube, brands, and businesses.",
+    "founder": { "@type": "Person", "name": "Alvi Karim" },
+    "sameAs": [
+      "https://x.com/AlviKarim175590"
+    ]
+  }
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-animations.css">
+  
+  <!-- Plyr Video Player (Modern UI) -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/CSSRulePlugin.min.js" defer></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Ambient Bokeh Orbs -->
+  <div class="hero__floating-element hero__floating-element--1" aria-hidden="true"></div>
+  <div class="hero__floating-element hero__floating-element--2" aria-hidden="true"></div>
+
+  <!-- =========================================
+       FULL-SCREEN MENU OVERLAY
+       ========================================= -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-overlay__close" id="menuClose"></div>
+    <nav class="menu-overlay__nav">
+      <a href="#showreel" class="menu-overlay__link"><span class="menu-overlay__link-inner">Show Reel</span></a>
+      <a href="#about" class="menu-overlay__link"><span class="menu-overlay__link-inner">About MONOLITH</span></a>
+      <a href="#why-MONOLITH" class="menu-overlay__link"><span class="menu-overlay__link-inner">Why MONOLITH</span></a>
+      <a href="#works" class="menu-overlay__link"><span class="menu-overlay__link-inner">Works</span></a>
+      <a href="#reviews" class="menu-overlay__link"><span class="menu-overlay__link-inner">Client Review</span></a>
+      <a href="#payment" class="menu-overlay__link"><span class="menu-overlay__link-inner">Payment</span></a>
+      <a href="#contact" class="menu-overlay__link"><span class="menu-overlay__link-inner">Contact</span></a>
+    </nav>
+  </div>
+
+  <!-- =========================================
+       NAVBAR
+       ========================================= -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="brand-logo navbar__logo" id="navLogo">
+        <span class="brand-logo__main">MONOLITH</span><span class="brand-logo__accent">media</span>
+      </a>
+      <div class="navbar__right">
+        <button class="burger" id="burgerBtn" aria-label="Open menu">
+          <span class="line line1">
+            <span class="triangle"></span>
+            <span class="short-line"></span>
+          </span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================
+       HERO SECTION
+       ========================================= -->
+  <section class="hero section" id="hero">
+    <div class="container">
+      <p class="hero__subtitle anim-fade-up">Top-Tier Video Editing Agency</p>
+      <h1 class="hero__title anim-fade-up anim-delay-1">
+        Scale Your Audience With <span class="highlight">Professional Video Editing</span>
+      </h1>
+      <p class="hero__desc anim-fade-up anim-delay-2">
+        We partner with growth-focused creators and businesses, providing a world-class video editing agency experience. Get Done-For-You content systems that drive massive views and leads effortlessly.
+      </p>
+      <div class="hero__social-proof anim-fade-up anim-delay-3">
+        <div class="hero__avatars">
+          <div class="hero__avatar">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg,#1a7a3a,#0d3d1d);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;">
+              C</div>
+          </div>
+          <div class="hero__avatar">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg,#2563eb,#1e40af);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;">
+              J</div>
+          </div>
+          <div class="hero__avatar">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg,#7c3aed,#5b21b6);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;">
+              T</div>
+          </div>
+          <div class="hero__avatar">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;">
+              A</div>
+          </div>
+          <div class="hero__avatar">
+            <div
+              style="width:100%;height:100%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;">
+              +</div>
+          </div>
+        </div>
+        <div class="hero__proof-text">
+          <p><strong>Helped <span class="counter" data-target="30">30</span>+ Businesses Worldwide.</strong></p>
+          <p>Our Clients Speak for Us</p>
+        </div>
+      </div>
+      <div class="hero__cta anim-fade-up anim-delay-4">
+        <a href="https://wa.me/+8801940420383?text=Hello%20Alvi%2C%20I'm%20interested%20in%20booking%20a%20call%20with%20you.%20Kindly%20share%20your%20availability."
+          class="btn btn-primary" target="_blank" rel="noopener" id="heroCtaBtn">
+          <span>Book a call</span>
+          <span class="btn-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- =========================================
+       WORKS SECTION
+       ========================================= -->
+  <section class="works section" id="works">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:48px;">
+        <p class="section-label anim-fade-up">Our Works</p>
+        <h2 class="section-title anim-fade-up anim-delay-1">Explore Our <span class="highlight">Best Edits</span></h2>
+      </div>
+      
+      <div class="works__tabs anim-fade-up anim-delay-2">
+        <button class="works__tab active" data-tab="style1">Immersive POV</button>
+        <button class="works__tab" data-tab="style2">Historical Doc</button>
+        <button class="works__tab" data-tab="style3">Cinematic Mystery</button>
+        <button class="works__tab" data-tab="style4">Archival Tension</button>
+        <button class="works__tab" data-tab="style5">Infotainment</button>
+        <button class="works__tab" data-tab="style6">Direct Address</button>
+        <button class="works__tab" data-tab="style7">Historical Invest.</button>
+        <button class="works__tab" data-tab="style8">Tech & Engineering</button>
+      </div>
+
+      <div class="works__contents anim-fade-up anim-delay-3">
+        <!-- Style 1 -->
+        <div class="works__content active" data-tab="style1">
+          <div class="works__info">
+            <h3>1. Immersive POV & Narrative Storytelling</h3>
+            <p class="works__ref">(Reference: Your Life as Every Rank in the Yakuza)</p>
+            <p><strong>The Style:</strong> A highly engaging, first-person narrative format designed to pull the viewer directly into the story.</p>
+            <p><strong>Our Expertise:</strong> We use deliberate pacing, deep atmospheric sound design, and rich audio-visual world-building to create a strong emotional connection and keep viewers invested from start to finish.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="IDTV52TcM0E" data-ext=".mp4">
+            <video src="works_videos/IDTV52TcM0E.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 2 -->
+        <div class="works__content" data-tab="style2">
+          <div class="works__info">
+            <h3>2. Dynamic Historical Documentary</h3>
+            <p class="works__ref">(Reference: The Most Brutal Medieval Battles Explained)</p>
+            <p><strong>The Style:</strong> A visually striking documentary format that breathes life into historical events.</p>
+            <p><strong>Our Expertise:</strong> We seamlessly integrate map animations, motion graphics, and archival illustrations with intense, suspenseful sound design to make complex history accessible and thrilling.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="Hdnpq3LNF7o" data-ext=".mp4">
+            <video src="works_videos/Hdnpq3LNF7o.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 3 -->
+        <div class="works__content" data-tab="style3">
+          <div class="works__info">
+            <h3>3. Cinematic Mystery & Ecology</h3>
+            <p class="works__ref">(Reference: Wild Boars Are Disappearing in Droves)</p>
+            <p><strong>The Style:</strong> A high-end, documentary-style format that treats factual events like a suspenseful mystery.</p>
+            <p><strong>Our Expertise:</strong> We specialize in precise script pacing, premium color grading, and the strategic integration of cinematic B-roll to build curiosity and drive a compelling narrative.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="ssfnMXYCUeo" data-ext=".mp4">
+            <video src="works_videos/ssfnMXYCUeo.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 4 -->
+        <div class="works__content" data-tab="style4">
+          <div class="works__info">
+            <h3>4. Archival Tension & Real-Time Documentary</h3>
+            <p class="works__ref">(Reference: The Most Insane Tornado Ever Recorded)</p>
+            <p><strong>The Style:</strong> A raw, urgency-driven format that places the viewer right in the middle of a major event.</p>
+            <p><strong>Our Expertise:</strong> We expertly blend raw archival video, live news broadcasts, and intense audio mixing (like radio scanners) to create an atmosphere of real-time tension and scale.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="G0emZm2KgLA" data-ext=".mp4">
+            <video src="works_videos/G0emZm2KgLA.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 5 -->
+        <div class="works__content" data-tab="style5">
+          <div class="works__info">
+            <h3>5. Fast-Paced Infotainment (High-Retention)</h3>
+            <p class="works__ref">(Reference: Every Popular Food That Shouldn't Exist)</p>
+            <p><strong>The Style:</strong> A highly stimulating, fast-paced format optimized for the modern viewer's attention span.</p>
+            <p><strong>Our Expertise:</strong> We utilize snappy visual cuts, rapid information delivery, and eye-catching pop-up graphics to maximize viewer retention and engagement metrics.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="z1z0Y2vlKjU" data-ext=".mp4">
+            <video src="works_videos/z1z0Y2vlKjU.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 6 -->
+        <div class="works__content" data-tab="style6">
+          <div class="works__info">
+            <h3>6. Direct Address & Explainer Format</h3>
+            <p class="works__ref">(Reference: Terribly WRONG Facts CHRISTIANS Still Believe In)</p>
+            <p><strong>The Style:</strong> A conversational, point-by-point breakdown format ideal for myth-busting and education.</p>
+            <p><strong>Our Expertise:</strong> We use a "direct-to-camera" flow supported by clean visual aids and on-screen text to simplify complex or debated topics, making them highly accessible and engaging.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="KhQlLTOEYgI" data-ext=".mp4">
+            <video src="works_videos/KhQlLTOEYgI.mp4" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 7 -->
+        <div class="works__content" data-tab="style7">
+          <div class="works__info">
+            <h3>7. Cinematic Historical Investigation <span class="glow-badge" style="position:relative; margin-left: 10px; font-size: 11px; padding: 4px 12px; animation: none; transform: translateY(-3px);">Short Demo</span></h3>
+            <p class="works__ref">(Reference: Deep Future Daily - The Tutankhamun Mask Mystery)</p>
+            <p><strong>The Style:</strong> A gripping, investigative documentary format that treats ancient history like a modern true-crime or sci-fi thriller.</p>
+            <p><strong>Our Expertise:</strong> We seamlessly blend rich historical visuals with sleek, modern sci-tech graphics (such as quantum scanning overlays) to build a compelling mystery. By utilizing precision pacing and dramatic soundscapes, we bridge ancient anomalies with modern-day controversies to keep the viewer constantly on the edge of their seat.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="Timeline 1" data-ext=".mov">
+            <video src="works_videos/Timeline 1.mov" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Style 8 -->
+        <div class="works__content" data-tab="style8">
+          <div class="works__info">
+            <h3>8. Tech & Engineering Explainer (Eco-Tech Mini-Documentary) <span class="glow-badge" style="position:relative; margin-left: 10px; font-size: 11px; padding: 4px 12px; animation: none; transform: translateY(-3px);">Short Demo</span></h3>
+            <p class="works__ref">(Reference: Archimedes Wind Turbine Explainer / REVISED.mp4)</p>
+            <p><strong>The Style:</strong> A deep-dive, highly informative mini-documentary format that takes complex technical subjects—like engineering, physics, and renewable energy—and breaks them down into accessible, engaging narratives.</p>
+            <p><strong>Our Expertise:</strong> We specialize in technical storytelling that ensures "how it works" videos never feel dry or boring. By framing subjects like ancient mathematical principles and modern aerodynamics within a clear "problem and solution" structure, we craft edits that keep tech-savvy audiences and science enthusiasts engaged until the very last second.</p>
+          </div>
+          <div class="works__video-wrapper custom-video" data-video-id="Timeline 2" data-ext=".mov">
+            <video src="works_videos/Timeline 2.mov" class="custom-video__thumb" style="width: 100%; height: 100%; object-fit: cover;" preload="metadata" muted playsinline></video>
+            <div class="custom-video__play">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       STATS SECTION
+       ========================================= -->
+  <section class="stats section" id="stats">
+    <div class="container">
+      <h2 class="stats__heading anim-fade-up">
+        Tired of dull video content that blends in? Let's level up your game with standout visuals!
+      </h2>
+      <div class="stats__grid">
+        <div class="stat anim-fade-up">
+          <div class="stat__number"><span class="counter" data-target="120">0</span>%</div>
+          <div class="stat__label">More Engagement</div>
+          <div class="stat__sublabel">Viral Edits</div>
+        </div>
+        <div class="stat anim-fade-up anim-delay-1">
+          <div class="stat__number"><span class="counter" data-target="3">0</span>X</div>
+          <div class="stat__label">More Reach</div>
+          <div class="stat__sublabel">Growth Boost</div>
+        </div>
+        <div class="stat anim-fade-up anim-delay-2">
+          <div class="stat__number"><span class="counter" data-target="30">0</span>+</div>
+          <div class="stat__label">Projects Done</div>
+          <div class="stat__sublabel">Industry Trust</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       ABOUT SECTION
+       ========================================= -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__images anim-fade-left">
+          <div class="about__image-box"
+            style="background:linear-gradient(135deg,#0f3d0f,#000);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <p style="color:#8B8E97;font-size:13px;margin-top:12px;text-align:center;">Coaches</p>
+          </div>
+          <div class="about__image-box"
+            style="background:linear-gradient(135deg,#0d1f0d,#000);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            <p style="color:#8B8E97;font-size:13px;margin-top:12px;text-align:center;">Content Creator</p>
+          </div>
+          <div class="about__image-box"
+            style="background:linear-gradient(135deg,#1a0d0d,#000);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg>
+            <p style="color:#8B8E97;font-size:13px;margin-top:12px;text-align:center;">YouTube</p>
+          </div>
+          <div class="about__image-box"
+            style="background:linear-gradient(135deg,#0d0d1a,#000);padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+            <p style="color:#8B8E97;font-size:13px;margin-top:12px;text-align:center;">Monetization</p>
+          </div>
+        </div>
+        <div class="about__content anim-fade-right">
+          <p class="section-label">About MONOLITH</p>
+          <h2 class="section-title">Why Choose <span class="highlight">Monolith Media</span></h2>
+          <p class="section-desc">From scripting to final delivery, we handle every piece of the puzzle so you can focus
+            on growing your brand.</p>
+          <div class="about__checklist">
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>40+ Skilled Professionals In-House</span>
+            </div>
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>Focused on Real, Measurable Results</span>
+            </div>
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>Trusted by Over 100 Satisfied Clients</span>
+            </div>
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>Ready-to-Launch Content Funnel System</span>
+            </div>
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>Custom-Built CRM for Your Business</span>
+            </div>
+            <div class="about__check-item">
+              <svg class="check-icon" viewBox="0 0 512 512">
+                <path fill="#00FF00"
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>24/7 Support, Anytime You Need Us</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       WHY MONOLITH vs OTHERS
+       ========================================= -->
+  <section class="comparison section" id="why-MONOLITH">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:48px;">
+        <p class="section-label anim-fade-up">Why MONOLITH</p>
+        <h2 class="section-title anim-fade-up anim-delay-1">MONOLITH vs <span class="highlight">Other Agencies</span>
+        </h2>
+      </div>
+      <div class="comparison__grid">
+        <!-- MONOLITH Column -->
+        <div class="comparison__card comparison__card--MONOLITH anim-fade-up">
+          <h3 class="comparison__card-title" style="color:var(--green-primary);">Extra Value, Just for You</h3>
+          <div class="comparison__list">
+            <div class="comparison__item">
+              <svg class="icon icon--check" viewBox="0 0 512 512">
+                <path
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>40+ Skilled Professionals In-House</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--check" viewBox="0 0 512 512">
+                <path
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>Focused on Real, Measurable Results</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--check" viewBox="0 0 512 512">
+                <path
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" />
+              </svg>
+              <span>First 2 revisions are free</span>
+            </div>
+          </div>
+        </div>
+        <!-- OTHERS Column -->
+        <div class="comparison__card comparison__card--others anim-fade-up anim-delay-1">
+          <h3 class="comparison__card-title" style="color:#ff4d4d;">Other Agencies</h3>
+          <div class="comparison__list">
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Extra charges apply for every revision</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Unreliable freelancers with slow delivery timelines</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Edits that don't drive engagement or conversions</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Weak thumbnails &amp; titles lacking CTR strategy</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>No system for effective content distribution</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Little to no funnel or lead capture expertise</span>
+            </div>
+            <div class="comparison__item">
+              <svg class="icon icon--cross" viewBox="0 0 24 24">
+                <path
+                  d="M18.36 5.64a1 1 0 0 0-1.41 0L12 10.59 7.05 5.64a1 1 0 1 0-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 1 0 1.41 1.41L12 13.41l4.95 4.95a1 1 0 0 0 1.41-1.41L13.41 12l4.95-4.95a1 1 0 0 0 0-1.41z" />
+              </svg>
+              <span>Slow replies and poor communication flow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="comparison__note anim-fade-up">😊 Usually, we don't provide samples, but if a client is genuinely
+        interested to see our works, we're happy to create one for a small fee.</p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CLIENT REVIEWS / TESTIMONIALS
+       ========================================= -->
+  <section class="reviews section" id="reviews">
+    <div class="container">
+      <p class="section-label anim-fade-up">Client Reviews</p>
+      <h2 class="section-title anim-fade-up anim-delay-1">What Our Clients <span class="highlight">Say About Us</span>
+      </h2>
+
+      <div class="reviews__slider anim-fade-up anim-delay-2">
+        <div class="reviews__track-wrapper">
+          <div class="reviews__track" id="reviewsTrack">
+            <!-- Testimonial 1 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_003606.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_003640.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_003711.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 4 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_003804.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 5 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_003824.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 6 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_004357.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 7 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_004413.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 8 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_004433.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+            <!-- Testimonial 9 -->
+            <div class="review-card image-review">
+              <img src="testimonials/Recording_20260627_004444.jpg" alt="Client Testimonial" class="review-image">
+            </div>
+          </div>
+        </div>
+        <div class="reviews__arrows">
+          <button class="reviews__arrow" id="reviewPrev" aria-label="Previous review">
+            <svg viewBox="0 0 24 24">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+          <button class="reviews__arrow" id="reviewNext" aria-label="Next review">
+            <svg viewBox="0 0 24 24">
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       OUR APPROACH
+       ========================================= -->
+  <section class="approach section" id="approach">
+    <div class="container">
+      <p class="section-label anim-fade-up">Our Approach</p>
+      <h2 class="section-title anim-fade-up anim-delay-1">Strategic Video Editing <span class="highlight">That Drives Leads
+          For You</span></h2>
+
+      <div class="approach__steps">
+        <!-- Step 1: Insight -->
+        <div class="approach__step anim-fade-up">
+          <div class="approach__step-content">
+            <p class="approach__step-label">Insight</p>
+            <h3 class="approach__step-title">Deep Idea Analysis</h3>
+            <p class="approach__step-desc">Leveraging industry knowledge, we dissect your ideas to uncover their true
+              potential and market fit.</p>
+          </div>
+          <div class="approach__step-visual"
+            style="position:relative;background:linear-gradient(135deg,#0f3d0f,#000);display:flex;align-items:center;justify-content:center;padding:40px;min-height:200px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+              <span class="glow-badge" style="position:relative;">Coaches</span>
+              <span class="glow-badge" style="position:relative;animation-delay:0.3s;">Personal Brand</span>
+              <span class="glow-badge" style="position:relative;animation-delay:0.6s;">E-Commerce</span>
+              <span class="glow-badge" style="position:relative;animation-delay:0.9s;">Fashion</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Scripting -->
+        <div class="approach__step anim-fade-up">
+          <div class="approach__step-content">
+            <p class="approach__step-label">Scripting</p>
+            <h3 class="approach__step-title">Your Story, Scripted</h3>
+            <p class="approach__step-desc">We turn your ideas into powerful narratives that sell, inspire, and stick in
+              people's minds.</p>
+          </div>
+          <div class="approach__step-visual"
+            style="background:#111;display:flex;flex-direction:column;gap:8px;padding:32px;border-radius:12px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+              <div class="rotating-text-container"
+                style="font-family:var(--font-heading);font-size:clamp(28px,4vw,42px);font-weight:800;">
+                <div class="rotating-text" style="height:1.2em;min-width:120px;">
+                  <span class="rotating-text__word" style="position:relative;">CTA</span>
+                  <span class="rotating-text__word">VALUE</span>
+                  <span class="rotating-text__word">HOOK</span>
+                  <span class="rotating-text__word">TITLE</span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div
+                style="height:8px;background:linear-gradient(90deg,var(--green-dark),transparent);border-radius:4px;width:100%;">
+              </div>
+              <div
+                style="height:8px;background:linear-gradient(90deg,rgba(0,255,0,0.15),transparent);border-radius:4px;width:80%;">
+              </div>
+              <div
+                style="height:8px;background:linear-gradient(90deg,rgba(0,255,0,0.1),transparent);border-radius:4px;width:65%;">
+              </div>
+              <div
+                style="height:8px;background:linear-gradient(90deg,rgba(0,255,0,0.05),transparent);border-radius:4px;width:50%;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Editing -->
+        <div class="approach__step anim-fade-up">
+          <div class="approach__step-content">
+            <p class="approach__step-label">Editing</p>
+            <h3 class="approach__step-title">Next-Level Cuts</h3>
+            <p class="approach__step-desc">Clean, dynamic edits with premium motion graphics that make your content
+              unforgettable.</p>
+          </div>
+          <div class="approach__step-visual"
+            style="background:linear-gradient(135deg,#111,#0a0a0a);display:flex;align-items:center;justify-content:center;min-height:220px;border-radius:12px;">
+            <div style="text-align:center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1"
+                stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8;">
+                <polygon points="23 7 16 12 23 17 23 7" />
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              </svg>
+              <p style="color:var(--text-grey);font-size:13px;margin-top:12px;">Premium Motion Graphics</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Thumbnail -->
+        <div class="approach__step anim-fade-up">
+          <div class="approach__step-content">
+            <p class="approach__step-label">Thumbnail</p>
+            <h3 class="approach__step-title">Crafting Scroll-Stopping Designs</h3>
+            <p class="approach__step-desc">We analyze other thumbnails in your niche and are able to replicate best
+              performing results.</p>
+          </div>
+          <div class="approach__step-visual"
+            style="background:linear-gradient(135deg,#0d1f0d,#000);display:flex;align-items:center;justify-content:center;min-height:220px;border-radius:12px;">
+            <div style="text-align:center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1"
+                stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8;">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+              <p style="color:var(--text-grey);font-size:13px;margin-top:12px;">Click-Worthy Thumbnails</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Post -->
+        <div class="approach__step anim-fade-up">
+          <div class="approach__step-content">
+            <p class="approach__step-label">Post</p>
+            <h3 class="approach__step-title">Go Live, Get Results</h3>
+            <p class="approach__step-desc">Your video is ready to shine — now it's time to share it with the world and
+              let the results roll in.</p>
+          </div>
+          <div class="approach__step-visual"
+            style="background:linear-gradient(135deg,#111,#050505);display:flex;align-items:center;justify-content:center;min-height:220px;border-radius:12px;">
+            <div style="text-align:center;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1"
+                stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8;">
+                <path d="M22 2L11 13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              <p style="color:var(--text-grey);font-size:13px;margin-top:12px;">Launch & Grow</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SERVICES CAROUSEL
+       ========================================= -->
+  <section class="services section" id="services">
+    <div class="container">
+      <p class="section-label anim-fade-up">Services</p>
+      <h2 class="section-title anim-fade-up anim-delay-1">What We <span class="highlight">Specialize In</span></h2>
+    </div>
+
+    <!-- Row 1: Slide Left -->
+    <div class="services__carousel-wrapper anim-fade-up anim-delay-2">
+      <div class="services__track services__track--left" id="servicesTrack1">
+        <!-- Set 1 -->
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg></div>
+          <h3 class="service-card__title">Infographic Videos</h3>
+          <p class="service-card__desc">Visually break down complex info into clear, engaging animated graphics.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg></div>
+          <h3 class="service-card__title">Talking Head Videos</h3>
+          <p class="service-card__desc">Clean, polished edits that keep the focus on your message and delivery.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg></div>
+          <h3 class="service-card__title">Documentary Videos</h3>
+          <p class="service-card__desc">Craft real stories with cinematic pacing, voice, and emotion.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg></div>
+          <h3 class="service-card__title">Real Estate Videos</h3>
+          <p class="service-card__desc">Highlight properties with sleek visuals and smooth, premium edits.</p>
+        </div>
+        <!-- Duplicate Set 1 for infinite scroll -->
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg></div>
+          <h3 class="service-card__title">Infographic Videos</h3>
+          <p class="service-card__desc">Visually break down complex info into clear, engaging animated graphics.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg></div>
+          <h3 class="service-card__title">Talking Head Videos</h3>
+          <p class="service-card__desc">Clean, polished edits that keep the focus on your message and delivery.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="23 7 16 12 23 17 23 7" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            </svg></div>
+          <h3 class="service-card__title">Documentary Videos</h3>
+          <p class="service-card__desc">Craft real stories with cinematic pacing, voice, and emotion.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg></div>
+          <h3 class="service-card__title">Real Estate Videos</h3>
+          <p class="service-card__desc">Highlight properties with sleek visuals and smooth, premium edits.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Slide Right -->
+    <div class="services__carousel-wrapper" style="margin-top:20px;">
+      <div class="services__track services__track--right" id="servicesTrack2">
+        <!-- Set 2 -->
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 640 512" fill="currentColor">
+              <path
+                d="M480.07 96H160a160 160 0 1 0 114.24 272h91.52A160 160 0 1 0 480.07 96zM248 268a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52H84a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm216 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" />
+            </svg></div>
+          <h3 class="service-card__title">Gaming Videos</h3>
+          <p class="service-card__desc">High-energy edits packed with effects, syncs, and sharp transitions.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg></div>
+          <h3 class="service-card__title">VSL (Video Sales Letters)</h3>
+          <p class="service-card__desc">Persuasive, fast-paced edits that drive conversions and sales.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg></div>
+          <h3 class="service-card__title">Shorts / Reels</h3>
+          <p class="service-card__desc">Scroll-stopping vertical videos tailored for fast social media impact.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+              <line x1="7" y1="2" x2="7" y2="22" />
+              <line x1="17" y1="2" x2="17" y2="22" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <line x1="2" y1="7" x2="7" y2="7" />
+              <line x1="2" y1="17" x2="7" y2="17" />
+              <line x1="17" y1="17" x2="22" y2="17" />
+              <line x1="17" y1="7" x2="22" y2="7" />
+            </svg></div>
+          <h3 class="service-card__title">Long Forms</h3>
+          <p class="service-card__desc">Structured, story-driven edits ideal for YouTube or detailed content.</p>
+        </div>
+        <!-- Duplicate Set 2 -->
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 640 512" fill="currentColor">
+              <path
+                d="M480.07 96H160a160 160 0 1 0 114.24 272h91.52A160 160 0 1 0 480.07 96zM248 268a12 12 0 0 1-12 12h-52v52a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12v-52H84a12 12 0 0 1-12-12v-24a12 12 0 0 1 12-12h52v-52a12 12 0 0 1 12-12h24a12 12 0 0 1 12 12v52h52a12 12 0 0 1 12 12zm216 76a40 40 0 1 1 40-40 40 40 0 0 1-40 40zm64-96a40 40 0 1 1 40-40 40 40 0 0 1-40 40z" />
+            </svg></div>
+          <h3 class="service-card__title">Gaming Videos</h3>
+          <p class="service-card__desc">High-energy edits packed with effects, syncs, and sharp transitions.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg></div>
+          <h3 class="service-card__title">VSL (Video Sales Letters)</h3>
+          <p class="service-card__desc">Persuasive, fast-paced edits that drive conversions and sales.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg></div>
+          <h3 class="service-card__title">Shorts / Reels</h3>
+          <p class="service-card__desc">Scroll-stopping vertical videos tailored for fast social media impact.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+              <line x1="7" y1="2" x2="7" y2="22" />
+              <line x1="17" y1="2" x2="17" y2="22" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <line x1="2" y1="7" x2="7" y2="7" />
+              <line x1="2" y1="17" x2="7" y2="17" />
+              <line x1="17" y1="17" x2="22" y2="17" />
+              <line x1="17" y1="7" x2="22" y2="7" />
+            </svg></div>
+          <h3 class="service-card__title">Long Forms</h3>
+          <p class="service-card__desc">Structured, story-driven edits ideal for YouTube or detailed content.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- =========================================
+       FAQ
+       ========================================= -->
+  <section class="faq section" id="faq">
+    <div class="container">
+      <div style="text-align:center;">
+        <p class="section-label anim-fade-up">FAQ</p>
+        <h2 class="section-title anim-fade-up anim-delay-1">Frequently Asked <span class="highlight">Questions</span>
+        </h2>
+      </div>
+
+      <div class="faq__list">
+        <div class="faq__item anim-fade-up">
+          <button class="faq__question">
+            <span>What types of videos do you edit?</span>
+            <span class="faq__icon"><svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+              </svg></span>
+          </button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">We specialize in a wide range of video types including talking head videos,
+              infographic videos, documentaries, real estate videos, gaming content, VSLs (Video Sales Letters),
+              short-form content (Reels/Shorts), and long-form YouTube videos.</div>
+          </div>
+        </div>
+        <div class="faq__item anim-fade-up anim-delay-1">
+          <button class="faq__question">
+            <span>How fast is your turnaround time?</span>
+            <span class="faq__icon"><svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+              </svg></span>
+          </button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">Our standard turnaround is 24-48 hours for short-form content and 3-5
+              business days for long-form videos. Rush delivery is also available upon request.</div>
+          </div>
+        </div>
+        <div class="faq__item anim-fade-up anim-delay-2">
+          <button class="faq__question">
+            <span>Do you offer revisions?</span>
+            <span class="faq__icon"><svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+              </svg></span>
+          </button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">Yes! The first 2 revisions are completely free. We want to make sure you're
+              100% satisfied with the final product before it goes live.</div>
+          </div>
+        </div>
+        <div class="faq__item anim-fade-up anim-delay-3">
+          <button class="faq__question">
+            <span>What's the pricing structure?</span>
+            <span class="faq__icon"><svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+              </svg></span>
+          </button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">We offer flexible pricing based on your needs — from per-video pricing to
+              monthly retainer packages. Book a call with us to get a custom quote tailored to your business.</div>
+          </div>
+        </div>
+        <div class="faq__item anim-fade-up anim-delay-4">
+          <button class="faq__question">
+            <span>Can I see samples of your work?</span>
+            <span class="faq__icon"><svg viewBox="0 0 24 24">
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" />
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" />
+              </svg></span>
+          </button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">Usually, we don't provide free samples, but if a client is genuinely
+              interested, we're happy to create a sample edit for a small fee to demonstrate our quality and style.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       PAYMENT METHODS
+       ========================================= -->
+  <section class="payment section" id="payment">
+    <div class="container">
+      <div style="text-align:center;">
+        <p class="section-label anim-fade-up">Payment</p>
+        <h2 class="section-title anim-fade-up anim-delay-1">Supported <span class="highlight">Payment Methods</span></h2>
+        <p class="section-desc anim-fade-up anim-delay-2" style="max-width: 600px; margin: 0 auto 40px;">We accept payments via Remitly, Taptap Send, and Wise. <strong>Remitly and Taptap Send are highly recommended</strong> due to their low fees and fast delivery times. Select a method to view bank details.</p>
+      </div>
+
+      <div class="payment__methods anim-fade-up anim-delay-3" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;">
+        <button class="payment__badge payment-btn" data-method="Remitly" style="background: rgba(255,255,255,0.05); padding: 16px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: white; transition: all 0.3s ease; width: 250px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green-primary)" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Remitly
+          </div>
+          <div style="font-size: 12px; color: var(--text-grey); font-weight: normal; line-height: 1.5; text-align: center; margin-top: 4px;">
+            <span style="color: #00ff00;">$0 fee</span> • Fast transfer<br>
+            <span style="color: #fff; font-weight: 500; display: inline-block; margin-top: 4px; padding: 2px 8px; background: rgba(0,255,0,0.1); border-radius: 4px;">Highly Recommended</span>
+          </div>
+        </button>
+        <button class="payment__badge payment-btn" data-method="Taptap Send" style="background: rgba(255,255,255,0.05); padding: 16px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: white; transition: all 0.3s ease; width: 250px;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8l4 4-4 4M8 12h8"/></svg>
+            Taptap Send
+          </div>
+          <div style="font-size: 12px; color: var(--text-grey); font-weight: normal; line-height: 1.5; text-align: center; margin-top: 4px;">
+            <span style="color: #00ff00;">Low fee</span> • Fast transfer<br>
+            <span style="color: #fff; font-weight: 500; display: inline-block; margin-top: 4px; padding: 2px 8px; background: rgba(0,255,0,0.1); border-radius: 4px;">Highly Recommended</span>
+          </div>
+        </button>
+        <button class="payment__badge payment-btn" data-method="Wise" style="background: rgba(255,255,255,0.05); padding: 16px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; color: white; transition: all 0.3s ease; width: 250px; opacity: 0.8;">
+          <div style="display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 18px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--green-primary)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Wise
+          </div>
+          <div style="font-size: 12px; color: var(--text-grey); font-weight: normal; line-height: 1.5; text-align: center; margin-top: 4px;">
+            <span style="color: #ff4d4d;">High fee</span> • Delayed transfer<br>
+            <span style="display: inline-block; margin-top: 4px; padding: 2px 8px; opacity: 0.7;">Not recommended</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="payment__details anim-fade-up anim-delay-4" id="paymentDetails" style="display: none; background: linear-gradient(135deg, #0d1f0d, #000); padding: 40px; border-radius: 12px; border: 1px solid rgba(0,255,0,0.1); max-width: 800px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <h3 id="paymentDetailsTitle" style="color: var(--green-primary); margin-bottom: 24px; text-align: center; font-size: 24px;">Bank Details</h3>
+        
+        <div id="paymentPasswordPrompt" style="text-align: center; padding: 20px;">
+          <p style="color: var(--text-grey); margin-bottom: 16px;">Please enter the client password to view the bank details.</p>
+          <div style="display: flex; justify-content: center; gap: 10px; max-width: 400px; margin: 0 auto;">
+            <input type="password" id="paymentPasswordInput" placeholder="Enter password..." style="flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: #fff; outline: none; font-family: inherit;">
+            <button id="paymentPasswordSubmit" style="background: var(--green-primary); color: #000; font-weight: bold; padding: 0 24px; border-radius: 8px; border: none; cursor: pointer; transition: opacity 0.3s;">Unlock</button>
+          </div>
+          <p id="paymentPasswordError" style="color: #ff4d4d; margin-top: 12px; font-size: 14px; display: none;">Incorrect password. Please try again.</p>
+        </div>
+
+        <div id="paymentDetailsGrid" style="display: none; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Bank Name</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valBankName" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Bank Name" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">A/C Number</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valAcNumber" style="font-size: 16px; font-weight: 500; color: #fff; font-family: monospace; letter-spacing: 1px;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy A/C Number" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">First Name</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valFirstName" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy First Name" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Last Name</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valLastName" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Last Name" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Swift Code</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valSwiftCode" style="font-size: 16px; font-weight: 500; color: #fff; font-family: monospace;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Swift Code" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Branch Code</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valBranchCode" style="font-size: 16px; font-weight: 500; color: #fff; font-family: monospace;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Branch Code" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Routing No.</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valRoutingNo" style="font-size: 16px; font-weight: 500; color: #fff; font-family: monospace;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Routing No." style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Country</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valCountry" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Country" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">City</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valCity" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy City" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Postcode</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valPostcode" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Postcode" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Branch</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valBranch" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Branch" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Email</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span id="valEmail" style="font-size: 16px; font-weight: 500; color: #fff;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Email" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+          <div class="detail-item" style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+            <span style="font-size: 12px; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Address</span>
+            <div style="display: flex; align-items: flex-start; gap: 8px;">
+              <span id="valAddress" style="font-size: 16px; font-weight: 500; color: #fff; line-height: 1.5;" class="copy-value"></span>
+              <button class="copy-btn" title="Copy" aria-label="Copy Address" style="background: none; border: none; cursor: pointer; color: var(--green-primary); padding: 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       CONTACT
+       ========================================= -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="contact__wrapper anim-fade-up">
+        <h2 class="contact__title">Ready to Hire a Professional Video Editor? Let's Talk.</h2>
+        <p class="contact__desc">Looking for a reliable video editing company to scale your brand? Book a free strategy call and let's build a high-retention content system together.</p>
+        <div class="contact__cta">
+          <a href="https://wa.me/+8801940420383?text=Hello%20Alvi%2C%20I'm%20interested%20in%20booking%20a%20call%20with%20you.%20Kindly%20share%20your%20availability."
+            class="btn btn-primary" target="_blank" rel="noopener" id="contactCtaBtn">
+            <span>Book a call</span>
+            <span class="btn-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </span>
+          </a>
+        </div>
+        <div class="contact__socials">
+          <!-- X/Twitter -->
+          <a href="https://x.com/AlviKarim175590" class="contact__social-link" target="_blank" rel="noopener"
+            aria-label="Twitter/X">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       FOOTER
+       ========================================= -->
+  <footer class="footer" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 60px; padding-bottom: 40px; margin-top: 40px; background: radial-gradient(circle at center top, rgba(52,211,153,0.03) 0%, transparent 70%);">
+    <div class="container">
+      <div class="footer__content" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 40px;">
+        <div class="footer__left" style="flex: 1; min-width: 250px; display: flex; flex-direction: column; align-items: flex-start;">
+          <a href="#" class="brand-logo footer__logo" style="margin-bottom: 16px; display: inline-flex; align-items: baseline;">
+            <span class="brand-logo__main">MONOLITH</span><span class="brand-logo__accent">media</span>
+          </a>
+          <p class="footer__text" style="font-size: 14px; color: var(--text-grey); opacity: 0.7; margin: 0; padding-left: 2px;">
+            &copy; 2026 <strong>MONOLITH</strong> | All rights reserved.
+          </p>
+        </div>
+        <div class="footer__right" style="flex: 2; min-width: 300px; max-width: 700px;">
+          <div class="footer__seo-text" style="font-size:12px; color:var(--text-grey); line-height: 1.7; opacity: 0.4; text-align: right;">
+            Monolith Media is a top-tier video editing agency specializing in high-retention YouTube video editing, cinematic documentaries, short-form TikTok/Reels, and high-converting Video Sales Letters (VSLs). We provide professional video editing services for content creators, brands, and businesses looking to scale their organic reach. Hire an expert video editor today.
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Plyr Video Player JS -->
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+  <script src="script-animations.js"></script>
+</body>
+
+</html>
