@@ -3,7 +3,7 @@ import { db } from '@/db';
 import { cards } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import path from 'path';
-import archiver from 'archiver';
+const archiver = require('archiver');
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
