@@ -24,7 +24,7 @@ export default function CustomSelect({ value, onChange, options = [], className,
     <div className="custom-select-container" style={style}>
       <button 
         type="button" 
-        className={className || "custom-select-trigger"}
+        className={`custom-select-trigger ${className || ''}`.trim()}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>{selectedOption.label}</span>
