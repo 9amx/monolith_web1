@@ -131,33 +131,6 @@ export async function generateInvoiceBuffer(invoiceData) {
       doc.fillColor(textMuted).font('Helvetica').fontSize(14).text('Grand Total', col3X - 40, totalsY + 75, { width: 100, align: 'left' });
       doc.fillColor(white).font('Helvetica-Bold').fontSize(18).text(invoiceData.total || '$0', col4X, totalsY + 73, { width: 70, align: 'center' });
 
-      // --- BOTTOM SECTION ---
-      const bottomY = tableY + tableHeight + 40;
-
-      // Payment Info
-      drawPill('Payment Information', marginX, bottomY, 180);
-      
-      const payY = bottomY + 40;
-      doc.font('Helvetica').fontSize(12).fillColor(textMuted);
-      doc.text('Bank', marginX, payY);
-      doc.text(':', marginX + 80, payY);
-      doc.fillColor(white).text('Dutch Bangla Bank', marginX + 100, payY);
-
-      doc.fillColor(textMuted).text('Bank Transfer', marginX, payY + 25);
-      doc.text(':', marginX + 80, payY + 25);
-      doc.fillColor(white).text('1201580374514', marginX + 100, payY + 25);
-
-      // Terms & Conditions
-      doc.font('Helvetica-Bold').fontSize(14).fillColor(white).text('Terms and Conditions:', rightX, bottomY + 5);
-      
-      const termBullet = (text, yPos) => {
-        doc.circle(rightX + 5, yPos + 5, 2).fill(white);
-        doc.font('Helvetica').fontSize(12).text(text, rightX + 15, yPos, { width: 200, lineGap: 4 });
-      };
-
-      termBullet('Payment must be made before final raw files delivery.', bottomY + 35);
-      termBullet('Any late payment is subject to additional fees.', bottomY + 75);
-
       doc.end();
     } catch (error) {
       reject(error);
