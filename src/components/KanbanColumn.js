@@ -9,10 +9,15 @@ export default function KanbanColumn({ column, index, cards, teamMembers, client
   const [editingTitle, setEditingTitle] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isAddingCard, setIsAddingCard] = useState(false);
+  const [newCardTitle, setNewCardTitle] = useState('');
+  
   const titleRef = useRef(null);
   const menuRef = useRef(null);
+  const addCardInputRef = useRef(null);
 
   useEffect(() => { if (editingTitle && titleRef.current) titleRef.current.focus(); }, [editingTitle]);
+  useEffect(() => { if (isAddingCard && addCardInputRef.current) addCardInputRef.current.focus(); }, [isAddingCard]);
   useEffect(() => { setColTitle(column.title); }, [column.title]);
 
   useEffect(() => {
@@ -34,6 +39,14 @@ export default function KanbanColumn({ column, index, cards, teamMembers, client
       setColTitle(column.title);
     }
     setEditingTitle(false);
+  };
+
+  const submitNewCard = () => {
+    if (newCardTitle.trim()) {
+      onAddCard(column.id, newCardTitle.trim());
+      setNewCardTitle('');
+      setIsAddingCard(false);
+    }
   };
 
   return (
@@ -111,10 +124,31 @@ export default function KanbanColumn({ column, index, cards, teamMembers, client
       {/* Footer - Add Card Button */}
       {canEdit && (
         <div className="kanban-column-footer">
-          <button className="kanban-add-btn" onClick={() => onAddCard(column.id)}>
-            <Plus size={16} />
-            <span>Add a card</span>
-          </button>
+          {isAddingCard ? (
+            <div className="kanban-add-card-form">
+              <textarea
+                ref={addCardInputRef}
+                className="kanban-add-card-input"
+                placeholder="Enter a title for this card..."
+                value={newCardTitle}
+                onChange={e => setNewCardTitle(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitNewCard(); }
+                  if (e.key === 'Escape') setIsAddingCard(false);
+                }}
+                rows={2}
+              />
+              <div className="kanban-add-card-actions">
+                <button className="kanban-add-card-submit" onClick={submitNewCard}>Add Card</button>
+                <button className="kanban-add-card-cancel" onClick={() => setIsAddingCard(false)}>✕</button>
+              </div>
+            </div>
+          ) : (
+            <button className="kanban-add-btn" onClick={() => setIsAddingCard(true)}>
+              <Plus size={16} />
+              <span>Add a card</span>
+            </button>
+          )}
         </div>
       )}
     </div>

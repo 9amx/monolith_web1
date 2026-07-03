@@ -238,7 +238,7 @@ export default function KanbanBoard() {
     const cardData = {
       id,
       columnId,
-      title,
+      title: title || 'New Card',
       labels: [],
       assignees: [],
       comments: [],
