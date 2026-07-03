@@ -1175,9 +1175,9 @@ body { cursor: none; }
     flex: 1 1 auto;
   }
   .cm-panel { width: 100vw; }
-  .cm-layout { flex-direction: column; }
-  .cm-main { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .cm-sidebar { width: 100%; }
+  .cm-layout { flex-direction: column; overflow-y: auto; }
+  .cm-main { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); overflow-y: visible; flex: none; height: auto; }
+  .cm-sidebar { width: 100%; border-left: none; overflow-y: visible; flex: none; height: auto; }
 }
 .auth-gate-wrapper { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #000; z-index: 9999; padding: 20px; }
 .auth-gate-box { background: rgba(20, 24, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-top: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 48px 40px; width: 100%; max-width: 440px; backdrop-filter: blur(24px); box-shadow: 0 32px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; align-items: stretch; animation: modal-up 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
