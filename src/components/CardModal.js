@@ -1370,8 +1370,8 @@ export default function CardModal({
                       onClick={() => {
                         if (!showMembers) {
                           const links = card.projectLinks || [];
-                          if (!projectFileName || projectFileName.trim() === '' || links.length === 0) {
-                            showToast("You must provide a Project File Name and add at least one Project Link before assigning an editor.");
+                          if (!projectFileName || projectFileName.trim() === '' || links.length === 0 || !deadlineHours || Number(deadlineHours) <= 0) {
+                            showToast("You must provide a Project File Name, add at least one Project Link, and set a valid Deadline before assigning an editor.");
                             return;
                           }
                         }
