@@ -351,10 +351,13 @@ export async function submitProject(cardId, clientId, videoLink, duration) {
   if (!client) throw new Error("Client not found");
 
   // Save the duration to the card if provided
+  let parsedDuration = null;
   if (duration !== undefined) {
-    const parsedDuration = parseFloat(duration);
+    parsedDuration = parseFloat(duration);
     if (!isNaN(parsedDuration)) {
       await db.update(cards).set({ deliveredDuration: parsedDuration }).where(eq(cards.id, cardId));
+    } else {
+      parsedDuration = null;
     }
   }
 
