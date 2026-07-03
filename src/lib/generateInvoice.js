@@ -86,19 +86,19 @@ export async function generateInvoiceBuffer(invoiceData) {
       };
 
       const col1X = marginX + 20;
-      const col2X = marginX + 220;
+      const col2X = marginX + 190;
       const col3X = marginX + 310;
       const col4X = marginX + 400;
 
-      drawPill('Description', col1X, headerY, 150);
-      drawPill('Qty', col2X, headerY, 60);
+      drawPill('Title / Description', col1X, headerY, 150);
+      drawPill('Video Duration', col2X, headerY, 110);
       drawPill('Price', col3X, headerY, 70);
       drawPill('Total', col4X, headerY, 70);
 
       // Table Rows
       let rowY = headerY + 45;
       const items = invoiceData.items || [
-        { title: 'Video Editing', qty: '1', price: invoiceData.amount ? `$${invoiceData.amount}` : '$0', total: invoiceData.amount ? `$${invoiceData.amount}` : '$0' }
+        { title: 'Video Editing', duration: '10 Minutes', price: invoiceData.amount ? `$${invoiceData.amount}` : '$0', total: invoiceData.amount ? `$${invoiceData.amount}` : '$0' }
       ];
 
       doc.font('Helvetica').fontSize(12);
@@ -108,7 +108,7 @@ export async function generateInvoiceBuffer(invoiceData) {
           doc.fillColor(textMuted).font('Helvetica').fontSize(10).text(item.description, col1X + 10, rowY + 16, { width: 180, lineGap: 3 });
         }
         doc.font('Helvetica').fontSize(12);
-        doc.fillColor(white).text('1', col2X, rowY, { width: 60, align: 'center' }); // Qty is just 1
+        doc.fillColor(white).text(item.duration || 'N/A', col2X, rowY, { width: 110, align: 'center' }); // Video Duration instead of Qty
         doc.text(item.total || item.price || invoiceData.subtotal, col3X, rowY, { width: 70, align: 'center' });
         doc.text(item.total || invoiceData.subtotal, col4X, rowY, { width: 70, align: 'center' });
         rowY += 45;
