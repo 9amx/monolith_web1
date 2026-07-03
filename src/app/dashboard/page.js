@@ -1174,14 +1174,18 @@ function DashboardContent() {
                               onClick={() => {
                                 if (sub.isPaid) {
                                   // Marking as UNPAID
-                                  const confirmed = window.confirm("Are you sure you want to mark this as Unpaid?\\n\\nThis will remove the payment status.");
-                                  if (confirmed) {
-                                    const executeMarkUnpaid = async () => {
+                                  setConfirmDialog({
+                                    type: 'confirm',
+                                    isDanger: true,
+                                    title: 'Mark as Unpaid',
+                                    message: 'Are you sure you want to mark this as Unpaid?\n\nThis will remove the payment status.',
+                                    confirmText: 'Mark Unpaid',
+                                    onConfirm: async () => {
                                       await markSubmissionPaidAction(sub.id, false, null);
                                       setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, isPaid: false } : s));
-                                    };
-                                    executeMarkUnpaid();
-                                  }
+                                      setConfirmDialog(null);
+                                    }
+                                  });
                                   return;
                                 }
 
