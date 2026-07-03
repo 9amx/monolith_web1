@@ -884,7 +884,7 @@ export default function CardModal({
               </div>
 
               {/* Project Delivery Section */}
-              {canEdit && (
+              {true && (
                 <div
                   className="cm-section"
                   style={{
