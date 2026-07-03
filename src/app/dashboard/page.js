@@ -543,6 +543,16 @@ function DashboardContent() {
       <MenuOverlay hideRightItems={true} />
       
       <div className={styles.pageContainer}>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          style={{ maxWidth: '1200px', margin: '0 auto 10px auto', display: 'flex' }}
+        >
+          <a href="/projects" style={{ color: 'var(--text-grey)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+            ← Back to Project
+          </a>
+        </motion.div>
+        
         <motion.h1 
           className={styles.title}
           initial={{ opacity: 0, y: -20 }}

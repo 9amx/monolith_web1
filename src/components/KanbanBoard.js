@@ -8,7 +8,7 @@ import InviteModal from './InviteModal';
 import TeamManagementModal from './TeamManagementModal';
 import ProfileModal from './ProfileModal';
 import ConfirmModal from './ConfirmModal';
-import { Plus, Search, Home, LayoutGrid, Share2, LogOut, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, Search, Home, LayoutGrid, Share2, LogOut, Users, ChevronLeft, ChevronRight, BarChart2 } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { logout } from '@/actions/auth';
 import { getKanbanData, addCard, deleteCard, addColumn, updateBoardState, updateColumnOrder, updateCard, renameColumn, deleteColumn, addClientFromBoard } from '@/actions/kanban';
@@ -475,6 +475,11 @@ export default function KanbanBoard() {
                 <Share2 size={16} /> Share
               </button>
             </>
+          )}
+          {currentUser?.hasDashboardAccess && (
+            <button className="kb-toolbar-btn" onClick={() => router.push('/dashboard')} title="Go to Dashboard">
+              <BarChart2 size={16} /> Dashboard
+            </button>
           )}
           <button className="kb-toolbar-btn" onClick={() => boardRef.current?.scrollTo({ left: 0, behavior: 'smooth' })} title="Scroll to first list">
             <ChevronLeft size={16} /> Start
