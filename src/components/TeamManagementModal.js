@@ -101,10 +101,40 @@ export default function TeamManagementModal({ isOpen, onClose }) {
                       </div>
                     </div>
                     <div className="team-member-actions">
-                      <span className={`team-badge role-${(u.role || '').replace(' ', '').toLowerCase()}`}>
-                        {u.role === 'Super Admin' && <ShieldAlert size={12} style={{marginRight: 4}} />}
-                        {u.role}
-                      </span>
+                      {isSuperAdmin && !isSelf && u.role !== 'Super Admin' ? (
+                        <select
+                          className="role-select"
+                          value={u.role || 'Editor'}
+                          onChange={async (e) => {
+                            const newRole = e.target.value;
+                            startTransition(async () => {
+                              const { updateUserRole } = await import('@/actions/auth');
+                              await updateUserRole(u.id, newRole);
+                              loadUsers();
+                            });
+                          }}
+                          disabled={isPending}
+                          style={{
+                            background: 'rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            color: 'var(--text-primary)',
+                            padding: '4px 8px',
+                            borderRadius: '4px',
+                            marginRight: '12px',
+                            fontSize: '12px',
+                            outline: 'none'
+                          }}
+                        >
+                          <option value="Admin">Admin</option>
+                          <option value="Editor">Editor</option>
+                          <option value="Client">Client</option>
+                        </select>
+                      ) : (
+                        <span className={`team-badge role-${(u.role || '').replace(' ', '').toLowerCase()}`}>
+                          {u.role === 'Super Admin' && <ShieldAlert size={12} style={{marginRight: 4}} />}
+                          {u.role}
+                        </span>
+                      )}
                       {canRemove && (
                         <button className="team-remove-btn" onClick={() => handleRemoveUser(u.id, u.role, u.email)} title="Remove user" disabled={isPending}>
                           <Trash2 size={16} />

@@ -347,3 +347,5 @@ export async function verifyLoginOtpAndLogin(email, otp) {
   return { success: true, user };
 }
 
+e x p o r t   a s y n c   f u n c t i o n   u p d a t e U s e r R o l e ( u s e r I d ,   n e w R o l e )   {   c o n s t   c u r r e n t U s e r   =   a w a i t   g e t C u r r e n t U s e r ( ) ;   i f   ( ! c u r r e n t U s e r   | |   c u r r e n t U s e r . r o l e   ! = =   ' S u p e r   A d m i n ' )   t h r o w   n e w   E r r o r ( ' U n a u t h o r i z e d ' ) ;   a w a i t   d b . u p d a t e ( u s e r s ) . s e t ( {   r o l e :   n e w R o l e   } ) . w h e r e ( e q ( u s e r s . i d ,   u s e r I d ) ) ;   r e t u r n   {   s u c c e s s :   t r u e   } ;   }  
+ 
