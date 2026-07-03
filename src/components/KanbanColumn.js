@@ -111,7 +111,7 @@ export default function KanbanColumn({ column, index, cards, teamMembers, client
       {/* Footer - Add Card Button */}
       {canEdit && (
         <div className="kanban-column-footer">
-          <button className="kanban-add-card-btn" onClick={() => onAddCard(column.id)}>
+          <button className="kanban-add-btn" onClick={() => onAddCard(column.id)}>
             <Plus size={16} />
             <span>Add a card</span>
           </button>
