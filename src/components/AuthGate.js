@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from './AuthContext';
 import { login, requestSignupOtp, verifySignupOtpAndCreateUser, requestResetOtp, resetPasswordWithOtp, validateInvite, verifyLoginOtpAndLogin } from '@/actions/auth';
 
-function AuthContent({ children }) {
+function AuthContent({ children, title, subtitle, isDashboard }) {
   const { currentUser, isAuthLoaded } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -144,14 +144,14 @@ function AuthContent({ children }) {
   };
 
   return (
-    <div className="auth-gate-wrapper">
+    <div className={`auth-gate-wrapper ${isDashboard ? 'dashboard-mode' : ''}`}>
       <div className="auth-gate-box">
         <div className="auth-gate-header">
           <img src="/logo.svg" alt="Monolith" className="auth-gate-logo" onError={(e) => e.target.style.display = 'none'} />
           <h2>
             {isVerifyingSignupOtp || isVerifyingResetOtp || isVerifyingLoginOtp
               ? 'Enter Verification Code' 
-              : isForgotPassword ? 'Reset password' : (isLogin ? 'Welcome back' : 'Create an account')}
+              : isForgotPassword ? 'Reset password' : (isLogin ? (title || 'Welcome back') : 'Create an account')}
           </h2>
           <p>
             {isVerifyingSignupOtp || isVerifyingResetOtp || isVerifyingLoginOtp
@@ -160,7 +160,7 @@ function AuthContent({ children }) {
                 ? 'Enter your email to receive a reset code'
                 : (inviteRole && !isLogin 
                   ? `You have been invited to join as an ${inviteRole}` 
-                  : (isLogin ? 'Sign in to access your workflow' : 'Join to collaborate on projects'))}
+                  : (isLogin ? (subtitle || 'Sign in to access your workflow') : 'Join to collaborate on projects'))}
             {isValidatingToken && ' (Validating invite...)'}
           </p>
         </div>
@@ -272,11 +272,11 @@ function AuthContent({ children }) {
   );
 }
 
-export default function AuthGate({ children }) {
+export default function AuthGate({ children, title, subtitle, isDashboard }) {
   return (
     <AuthProvider>
       <Suspense fallback={<div className="kb-loading" suppressHydrationWarning><div className="kb-loading-pulse" suppressHydrationWarning /></div>}>
-        <AuthContent>{children}</AuthContent>
+        <AuthContent title={title} subtitle={subtitle} isDashboard={isDashboard}>{children}</AuthContent>
       </Suspense>
     </AuthProvider>
   );

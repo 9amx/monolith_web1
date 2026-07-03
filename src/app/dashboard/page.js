@@ -1358,7 +1358,7 @@ function DashboardContent() {
 
 export default function DashboardPage() {
   return (
-    <AuthGate>
+    <AuthGate isDashboard={true} title="Dashboard Login" subtitle="Sign in to manage Monolith Workflow">
       <DashboardContent />
     </AuthGate>
   );
