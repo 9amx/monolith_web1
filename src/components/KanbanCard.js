@@ -49,9 +49,20 @@ export default function KanbanCard({ card, index, teamMembers, clients = [], onC
           )}
 
           {/* Title */}
-          <div className="kanban-card-title-row">
-            <CheckCircle2 size={14} className="kanban-card-status-icon" />
-            <h4 className="kanban-card-title">{card.title}</h4>
+          <div className="kanban-card-title-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', flex: 1, overflow: 'hidden' }}>
+              <CheckCircle2 size={14} className="kanban-card-status-icon" style={{ marginTop: '2px', flexShrink: 0 }} />
+              <h4 className="kanban-card-title">{card.title}</h4>
+            </div>
+            {cardMembers.length > 0 && (
+              <div className="kanban-card-avatars" style={{ flexShrink: 0, marginLeft: '8px' }}>
+                {cardMembers.map(m => (
+                  <div key={m.id} className="kanban-avatar" style={{ background: m.avatarUrl ? `url(${m.avatarUrl}) center/cover` : m.gradient, width: '20px', height: '20px', fontSize: '9px' }} title={m.name}>
+                    {!m.avatarUrl && m.initials}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Client Name */}
@@ -62,7 +73,7 @@ export default function KanbanCard({ card, index, teamMembers, clients = [], onC
           )}
 
           {/* Bottom info row */}
-          {(commentCount > 0 || checklistTotal > 0 || card.dueDate || cardMembers.length > 0) && (
+          {(commentCount > 0 || checklistTotal > 0 || card.dueDate) && (
             <div className="kanban-card-footer">
               <div className="kanban-card-badges">
                 {card.dueDate && (
@@ -81,15 +92,6 @@ export default function KanbanCard({ card, index, teamMembers, clients = [], onC
                   </span>
                 )}
               </div>
-              {cardMembers.length > 0 && (
-                <div className="kanban-card-avatars">
-                  {cardMembers.map(m => (
-                    <div key={m.id} className="kanban-avatar" style={{ background: m.avatarUrl ? `url(${m.avatarUrl}) center/cover` : m.gradient }} title={m.name}>
-                      {!m.avatarUrl && m.initials}
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           )}
         </div>
