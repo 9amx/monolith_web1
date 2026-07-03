@@ -229,9 +229,10 @@ export async function updateCard(cardId, updates) {
       updateData.comments = updates.comments;
     }
 
-    if (updates.checklist !== undefined) updateData.checklist = updates.checklist;
+  if (updates.checklist !== undefined) updateData.checklist = updates.checklist;
   if (updates.clientId !== undefined) updateData.clientId = updates.clientId;
   if (updates.projectLinks !== undefined) updateData.projectLinks = updates.projectLinks;
+  if (updates.referenceLinks !== undefined) updateData.referenceLinks = updates.referenceLinks;
   if (updates.attachments !== undefined) updateData.attachments = updates.attachments;
   if (updates.deadlineHours !== undefined) updateData.deadlineHours = updates.deadlineHours;
   if (updates.ratePerMinute !== undefined) updateData.ratePerMinute = updates.ratePerMinute;
