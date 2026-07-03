@@ -97,7 +97,10 @@ export default function InviteModal({ isOpen, onClose }) {
                     value={role} 
                     onChange={(val) => setRole(val)}
                     options={[
-                      { value: 'Viewer', label: 'Viewer' }
+                      { value: 'Viewer', label: 'Viewer' },
+                      { value: 'Client', label: 'Client' },
+                      { value: 'Editor', label: 'Editor' },
+                      ...(isSuperAdmin ? [{ value: 'Admin', label: 'Admin' }] : [])
                     ]}
                   />
                 </div>
