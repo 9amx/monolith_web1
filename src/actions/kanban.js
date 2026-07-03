@@ -400,11 +400,9 @@ export async function submitProject(cardId, clientId, videoLink, duration) {
   const { generateInvoiceBuffer } = await import('../lib/generateInvoice.js');
   const pdfBuffer = await generateInvoiceBuffer(invoiceData);
 
-  // Send invoice to client ONLY if an Admin or Super Admin submits
-  // Editors' submissions go to Admins for review, not to the client
+  // Send invoice to client
   const { sendClientInvoiceEmail } = await import('../lib/mailer.js');
-  const isSubmitterAdmin = user.role === 'Admin' || user.role === 'Super Admin';
-  if (isSubmitterAdmin && client.email && client.email !== 'no-email@client.com') {
+  if (client.email && client.email !== 'no-email@client.com') {
     await sendClientInvoiceEmail(client.email, invoiceData, pdfBuffer);
   }
 
