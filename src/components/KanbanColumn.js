@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import KanbanCard from './KanbanCard';
-import { MoreHorizontal, Trash2, Pencil } from 'lucide-react';
+import { MoreHorizontal, Trash2, Pencil, Plus } from 'lucide-react';
 
 export default function KanbanColumn({ column, index, cards, teamMembers, clients, allCardsCount, onAddCard, onDeleteCard, onOpenCard, onRename, onDeleteColumn, canEdit }) {
   const [editingTitle, setEditingTitle] = useState(false);
@@ -108,7 +108,15 @@ export default function KanbanColumn({ column, index, cards, teamMembers, client
         )}
       </Droppable>
 
-
+      {/* Footer - Add Card Button */}
+      {canEdit && (
+        <div className="kanban-column-footer">
+          <button className="kanban-add-card-btn" onClick={() => onAddCard(column.id)}>
+            <Plus size={16} />
+            <span>Add a card</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
