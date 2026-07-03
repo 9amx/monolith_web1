@@ -103,11 +103,15 @@ export async function generateInvoiceBuffer(invoiceData) {
 
       doc.font('Helvetica').fontSize(12);
       items.forEach((item) => {
-        doc.fillColor(textMuted).text(item.title || item.description, col1X + 10, rowY, { width: 180 });
+        doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text(item.title || item.description, col1X + 10, rowY, { width: 180 });
+        if (item.title && item.description && item.title !== item.description) {
+          doc.fillColor(textMuted).font('Helvetica').fontSize(10).text(item.description, col1X + 10, rowY + 16, { width: 180, lineGap: 3 });
+        }
+        doc.font('Helvetica').fontSize(12);
         doc.fillColor(white).text('1', col2X, rowY, { width: 60, align: 'center' }); // Qty is just 1
         doc.text(item.total || item.price || invoiceData.subtotal, col3X, rowY, { width: 70, align: 'center' });
         doc.text(item.total || invoiceData.subtotal, col4X, rowY, { width: 70, align: 'center' });
-        rowY += 30;
+        rowY += 45;
       });
 
       // Divider Line
