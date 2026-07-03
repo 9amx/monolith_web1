@@ -420,7 +420,6 @@ export default function KanbanBoard() {
       {/* Header */}
       <header className="kb-header">
         <div className="kb-header-left">
-          <a href="/" className="kb-back-link">← Back to Site</a>
           <h1 className="kb-page-title">Monolith Workflow</h1>
         </div>
       </header>
