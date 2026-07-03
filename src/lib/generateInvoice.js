@@ -5,7 +5,7 @@ import fs from 'fs';
 export async function generateInvoiceBuffer(invoiceData) {
   return new Promise((resolve, reject) => {
     try {
-      const doc = new PDFDocument({ size: 'A4', margin: 50 });
+      const doc = new PDFDocument({ size: 'A4', margin: 0 });
       const buffers = [];
       doc.on('data', buffers.push.bind(buffers));
       doc.on('end', () => {
@@ -13,176 +13,146 @@ export async function generateInvoiceBuffer(invoiceData) {
       });
 
       // Colors
+      const bgDark = '#060312';
+      const bgGradientEnd = '#15062a';
       const white = '#ffffff';
-      const slate200 = '#e2e8f0';
-      const slate300 = '#cbd5e1';
-      const slate400 = '#94a3b8';
-      const slate800 = '#1e293b';
-      const purple = '#8B3DFF';
-      const cardBg = '#130f26';
-      
+      const textMuted = '#d1d5db';
+      const purple = '#8b5cf6';
+      const tableBg = '#181432';
+
       // Background Gradient
-      let grad = doc.linearGradient(0, 0, doc.page.width, doc.page.height);
-      grad.stop(0, '#0a0518').stop(1, '#1a0b36');
+      let grad = doc.linearGradient(0, 0, 0, doc.page.height);
+      grad.stop(0, bgDark).stop(1, bgGradientEnd);
       doc.rect(0, 0, doc.page.width, doc.page.height).fill(grad);
 
-      // Destructure invoiceData
-      const {
-        invoiceNo = '12345',
-        date = '30 July 2025',
-        clientName = 'Estelle Darcy',
-        clientEmail = 'estelle.darcy@email.com',
-        items = [
-          {
-            title: 'YouTube Video Editing',
-            description: 'Editing long-form YouTube videos\nwith transitions, color grading,\nsound sync & effects.',
-            duration: '25 Minutes',
-            total: '$500'
-          }
-        ],
-        subtotal = '$500',
-        total = '$500'
-      } = invoiceData;
+      // Add a subtle radial glow in the center-left and top-right if possible (PDFKit doesn't support radial gradients perfectly, but linear is fine)
 
-      // Logo
-      const logoPath = path.join(process.cwd(), 'logo.png');
-      let logoYOffset = 0;
-      if (fs.existsSync(logoPath)) {
-        doc.image(logoPath, 50, 45, { height: 40 });
-        logoYOffset = 40;
-      } else {
-        // Fallback M Logo
-        doc.roundedRect(50, 50, 60, 60, 15).fill(cardBg);
-        doc.fillColor(slate300).fontSize(40).font('Helvetica-Bold').text('M', 66, 60);
-        // MONOLITH MEDIA
-        doc.fillColor(slate300).fontSize(24).font('Helvetica-Bold').text('MONOLITH', 125, 55);
-        doc.fontSize(10).font('Helvetica').text('M  E  D  I  A', 128, 82, { characterSpacing: 4 });
-      }
+      // Margins
+      const marginX = 50;
+      let y = 60;
+
+      // --- HEADER LEFT ---
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(56).text('INVOICE', marginX, y, { tracking: 2 });
       
-      // Line under Monolith Media
-      doc.moveTo(125, 100).lineTo(250, 100).lineWidth(1).strokeColor(slate800).stroke();
+      const invoiceTextWidth = doc.widthOfString('INVOICE', { tracking: 2 });
+      y += 65;
       
-      doc.fontSize(8).font('Helvetica').fillColor(white).text('VIDEO EDITING AGENCY', 125, 110);
+      // Underline
+      doc.moveTo(marginX, y).lineTo(marginX + invoiceTextWidth + 10, y).lineWidth(4).strokeColor(white).stroke();
       
-      // Email icon (simple circle + text)
-      doc.circle(132, 130, 8).fill(cardBg);
-      doc.fillColor(white).fontSize(8).text('@', 128, 126); 
-      doc.fillColor(slate200).fontSize(10).text('minzu.bd.123@gmail.com', 148, 126);
+      y += 15;
+      doc.font('Helvetica-Bold').fontSize(14).text(`Invoice ${invoiceData.invoiceNo || 'CR-01234'}`, marginX, y);
+
+      y += 40;
+      
+      // Dates
+      const dateY = y;
+      doc.font('Helvetica').fontSize(12).fillColor(textMuted);
+      doc.text('Date', marginX, dateY);
+      doc.text(':', marginX + 60, dateY);
+      doc.fillColor(white).text(invoiceData.date || '2023-11-09', marginX + 80, dateY);
+      
+      doc.fillColor(textMuted).text('Due Date', marginX, dateY + 20);
+      doc.text(':', marginX + 60, dateY + 20);
+      doc.fillColor(white).text(invoiceData.date || '2023-12-09', marginX + 80, dateY + 20); // Just reusing date or can be blank
 
       // --- HEADER RIGHT ---
-      doc.fillColor(white).fontSize(40).font('Helvetica-Bold').text('INVOICE', 350, 50, { align: 'right' });
+      const rightX = 350;
+      let rightY = 60;
       
-      // Line under INVOICE
-      doc.moveTo(350, 95).lineTo(535, 95).lineWidth(1.5).strokeColor(white).stroke();
-      doc.circle(535, 95, 4).fill(white);
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(14).text('MONOLITH MEDIA', rightX, rightY, { width: 200, align: 'left' });
+      doc.font('Helvetica').fontSize(10).fillColor(textMuted).text('monolithmedia.digital', rightX, rightY + 35);
+      doc.text('Holding 26,1, Road Goyalkhali,\nBoyra, Stamp Khulna GPO', rightX, rightY + 50, { lineGap: 3 });
+
+      const billToY = dateY;
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('Bill To:', rightX, billToY);
+      doc.font('Helvetica').fontSize(12).text(invoiceData.clientName || 'Client Name', rightX, billToY + 20);
+      doc.text(invoiceData.clientEmail || 'client@example.com', rightX, billToY + 40);
+
+      // --- TABLE SECTION ---
+      const tableY = 280;
+      const tableWidth = doc.page.width - (marginX * 2);
+      const tableHeight = 350;
       
-      doc.fillColor(slate300).fontSize(12).font('Helvetica').text(`Invoice No. ${invoiceNo}`, 350, 115, { align: 'right' });
-      doc.text(date, 350, 135, { align: 'right' });
+      // Table Background
+      doc.roundedRect(marginX, tableY, tableWidth, tableHeight, 16).fill(tableBg);
 
-      // --- BILLED TO ---
-      doc.moveDown(3);
-      doc.fillColor(slate400).fontSize(12).font('Helvetica-Bold').text('Billed to:', 50, 180);
+      // Table Headers (Pills)
+      const headerY = tableY + 30;
       
-      doc.moveDown(1);
-      doc.fillColor(white).font('Helvetica-Bold').text('Client Name : ', 50, 210, { continued: true })
-         .fillColor(slate200).font('Helvetica').text(clientName);
-         
-      doc.fillColor(white).font('Helvetica-Bold').text('Email : ', 50, 230, { continued: true })
-         .fillColor(slate200).font('Helvetica').text(clientEmail);
+      const drawPill = (text, x, y, width, align = 'center') => {
+        doc.roundedRect(x, y - 8, width, 26, 13).fill(purple);
+        doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text(text, x, y, { width, align });
+      };
 
-      // --- WEBSITE / PHONE ---
-      doc.circle(410, 220, 12).strokeColor(white).lineWidth(2).stroke(); // Fake Globe
-      // Horizontal and vertical lines for globe
-      doc.moveTo(398, 220).lineTo(422, 220).lineWidth(1).stroke();
-      doc.moveTo(410, 208).lineTo(410, 232).stroke();
-      
-      doc.fillColor(slate200).fontSize(10).font('Helvetica').text('monolithmedia.digital', 430, 215);
-      doc.text('+880 1940-420383', 430, 230);
+      const col1X = marginX + 20;
+      const col2X = marginX + 220;
+      const col3X = marginX + 310;
+      const col4X = marginX + 400;
 
-      // --- TABLE HEADER ---
-      const tableTop = 280;
-      doc.rect(50, tableTop, 495, 35).fill(purple);
-      doc.fillColor(white).fontSize(10).font('Helvetica-Bold');
-      doc.text('ITEM / DESCRIPTION', 70, tableTop + 12);
-      doc.text('VIDEO DURATION', 250, tableTop + 12, { width: 150, align: 'center' });
-      doc.text('TOTAL', 400, tableTop + 12, { width: 135, align: 'center' });
+      drawPill('Description', col1X, headerY, 150);
+      drawPill('Qty', col2X, headerY, 60);
+      drawPill('Price', col3X, headerY, 70);
+      drawPill('Total', col4X, headerY, 70);
 
-      // --- TABLE BODY ---
-      let rowTop = tableTop + 55;
-      
-      items.forEach((item) => {
-        doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text(item.title, 70, rowTop);
-        doc.fillColor(slate400).font('Helvetica').fontSize(10).text(item.description, 70, rowTop + 20, { width: 180, lineGap: 4 });
-        
-        doc.fillColor(white).text(item.duration, 250, rowTop, { width: 150, align: 'center' });
-        doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text(item.total, 400, rowTop, { width: 135, align: 'center' });
-        
-        rowTop += 70; // Adjust row height
-      });
-
-      // Line below table
-      doc.moveTo(50, rowTop).lineTo(545, rowTop).lineWidth(1).strokeColor(slate800).stroke();
-
-      // --- TOTAL SECTION ---
-      const totalTop = rowTop + 20;
-      doc.fillColor(slate400).font('Helvetica').fontSize(12).text('Subtotal', 300, totalTop);
-      doc.fillColor(white).font('Helvetica-Bold').text(subtotal, 400, totalTop, { width: 135, align: 'center' });
-      
-      doc.rect(290, totalTop + 25, 255, 40).fill(purple);
-      doc.fillColor(white).font('Helvetica-Bold').fontSize(16).text('TOTAL', 310, totalTop + 38);
-      doc.text(total, 400, totalTop + 38, { width: 135, align: 'center' });
-
-      // --- SIGNATURES ---
-      // Thank you
-      doc.fillColor(white).font('Helvetica-Oblique').fontSize(38).text('Thank You!', 50, totalTop + 10);
-      doc.font('Helvetica').fontSize(12).text('We appreciate your business!', 50, totalTop + 55);
-
-      // Right Signature
-      const signRightTop = totalTop + 100;
-      doc.moveTo(290, signRightTop).lineTo(360, signRightTop).lineWidth(1).strokeColor(white).stroke();
-      doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('MST POLY KHATUN', 370, signRightTop - 5);
-      doc.moveTo(490, signRightTop).lineTo(545, signRightTop).stroke();
-
-      // --- FOOTER SEPARATOR ---
-      const footerTop = signRightTop + 35;
-      doc.moveTo(50, footerTop).lineTo(545, footerTop).lineWidth(1).strokeColor(slate800).stroke();
-
-      // --- FOOTER LEFT ---
-      doc.circle(70, footerTop + 40, 16).fill(cardBg); // Bank Icon fake
-      doc.fillColor(white).fontSize(15).font('Helvetica-Bold').text('III', 63, footerTop + 34);
-      
-      doc.fillColor(slate400).fontSize(10).font('Helvetica-Bold').text('Payment Information', 100, footerTop + 35);
-      
-      const paymentDetails = [
-        { label: 'BANK NAME', value: invoiceData.bankName || 'Dutch Bangla Bank' },
-        { label: 'A/C NO', value: invoiceData.accountNumber || '1201580374514' },
-        { label: 'ACCOUNT NAME', value: invoiceData.accountName || 'MST POLY KHATUN' },
-        { label: 'SWIFT CODE', value: invoiceData.swiftCode || 'DBBLBDDH' },
-        { label: 'ROUTING NO.', value: invoiceData.routingNumber || '090471544' },
+      // Table Rows
+      let rowY = headerY + 45;
+      const items = invoiceData.items || [
+        { title: 'Video Editing', qty: '1', price: invoiceData.amount ? `$${invoiceData.amount}` : '$0', total: invoiceData.amount ? `$${invoiceData.amount}` : '$0' }
       ];
 
-      let y = footerTop + 60;
-      paymentDetails.forEach(item => {
-        doc.fillColor(white).font('Helvetica-Bold').fontSize(8).text(item.label + ' : ', 100, y, { continued: true })
-           .fillColor(slate300).font('Helvetica').text(item.value);
-        const lines = item.value.split('\n').length;
-        y += 12 * lines;
+      doc.font('Helvetica').fontSize(12);
+      items.forEach((item) => {
+        doc.fillColor(textMuted).text(item.title || item.description, col1X + 10, rowY, { width: 180 });
+        doc.fillColor(white).text('1', col2X, rowY, { width: 60, align: 'center' }); // Qty is just 1
+        doc.text(item.total || item.price || invoiceData.subtotal, col3X, rowY, { width: 70, align: 'center' });
+        doc.text(item.total || invoiceData.subtotal, col4X, rowY, { width: 70, align: 'center' });
+        rowY += 30;
       });
 
-      // Vertical line separator
-      doc.moveTo(280, footerTop + 20).lineTo(280, footerTop + 220).lineWidth(1).strokeColor(slate800).stroke();
+      // Divider Line
+      const dividerY = tableY + tableHeight - 120;
+      doc.moveTo(marginX + 30, dividerY).lineTo(marginX + tableWidth - 30, dividerY).lineWidth(1).strokeColor('#2d284a').stroke();
 
-      // --- FOOTER RIGHT ---
-      doc.circle(315, footerTop + 40, 16).fill(cardBg); // Email Icon
-      doc.fillColor(white).fontSize(16).text('@', 307, footerTop + 34);
+      // Totals
+      const totalsY = dividerY + 15;
+      doc.fillColor(textMuted).font('Helvetica').fontSize(12).text('Subtotal', col3X - 40, totalsY, { width: 100, align: 'left' });
+      doc.fillColor(white).font('Helvetica-Bold').text(invoiceData.subtotal || '$0', col4X, totalsY, { width: 70, align: 'center' });
+
+      doc.fillColor(textMuted).font('Helvetica').fontSize(12).text('Sales Tax (0%)', col3X - 40, totalsY + 30, { width: 100, align: 'left' });
+      doc.fillColor(white).font('Helvetica-Bold').text('$0', col4X, totalsY + 30, { width: 70, align: 'center' });
+
+      doc.moveTo(col3X - 40, totalsY + 60).lineTo(marginX + tableWidth - 30, totalsY + 60).lineWidth(1).strokeColor('#2d284a').stroke();
+
+      doc.fillColor(textMuted).font('Helvetica').fontSize(14).text('Grand Total', col3X - 40, totalsY + 75, { width: 100, align: 'left' });
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(18).text(invoiceData.total || '$0', col4X, totalsY + 73, { width: 70, align: 'center' });
+
+      // --- BOTTOM SECTION ---
+      const bottomY = tableY + tableHeight + 40;
+
+      // Payment Info
+      drawPill('Payment Information', marginX, bottomY, 180);
       
-      doc.fillColor(slate300).fontSize(10).font('Helvetica').text(invoiceData.agencyEmail || 'minzu.bd.123@gmail.com', 345, footerTop + 36);
+      const payY = bottomY + 40;
+      doc.font('Helvetica').fontSize(12).fillColor(textMuted);
+      doc.text('Bank', marginX, payY);
+      doc.text(':', marginX + 80, payY);
+      doc.fillColor(white).text('Dutch Bangla Bank', marginX + 100, payY);
+
+      doc.fillColor(textMuted).text('Bank Transfer', marginX, payY + 25);
+      doc.text(':', marginX + 80, payY + 25);
+      doc.fillColor(white).text('1201580374514', marginX + 100, payY + 25);
+
+      // Terms & Conditions
+      doc.font('Helvetica-Bold').fontSize(14).fillColor(white).text('Terms and Conditions:', rightX, bottomY + 5);
       
-      doc.circle(315, footerTop + 95, 16).fill(cardBg); // Location Icon
-      doc.fillColor(white).fontSize(16).font('Helvetica-Bold').text('O', 310, footerTop + 89);
-      
-      doc.fillColor(white).fontSize(10).font('Helvetica-Bold').text('ADDRESS : ', 345, footerTop + 85, { continued: true })
-         .fillColor(slate300).font('Helvetica').text(invoiceData.agencyAddress || 'Holding 26,1, Road\nGoyalkhali, Boyra ,Stamp Khulna GPO');
+      const termBullet = (text, yPos) => {
+        doc.circle(rightX + 5, yPos + 5, 2).fill(white);
+        doc.font('Helvetica').fontSize(12).text(text, rightX + 15, yPos, { width: 200, lineGap: 4 });
+      };
+
+      termBullet('Payment must be made before final raw files delivery.', bottomY + 35);
+      termBullet('Any late payment is subject to additional fees.', bottomY + 75);
 
       doc.end();
     } catch (error) {
