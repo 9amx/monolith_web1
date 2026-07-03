@@ -434,7 +434,7 @@ export async function submitProject(cardId, clientId, videoLink, duration, edito
     if (admin.email) {
       await sendSubmissionEmail(
         admin.email, 
-        { clientName: client.name, cardTitle: card.title, projectFileName: card.projectFileName, videoLink, duration }, 
+        { clientName: client.name, cardTitle: card.title, projectFileName: card.projectFileName, videoLink, duration, invoiceNo: clientInvoiceId }, 
         submittedBy,
         adminPdfBuffer
       );

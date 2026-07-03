@@ -347,6 +347,8 @@ function DashboardContent() {
     }
   };
 
+  const [exchangeRate, setExchangeRate] = useState(120);
+
   // Load from DB on mount and start polling
   useEffect(() => {
     if (currentUser && !currentUser.hasDashboardAccess) {
@@ -355,6 +357,16 @@ function DashboardContent() {
     }
 
     setIsMounted(true);
+    
+    // Fetch live exchange rate
+    fetch('https://open.er-api.com/v6/latest/USD')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.rates && data.rates.BDT) {
+          setExchangeRate(data.rates.BDT);
+        }
+      })
+      .catch(err => console.error('Failed to fetch exchange rate:', err));
     getDashboardData().then(data => {
       setClients(data.clients);
       setInvoices(data.invoices);
@@ -1079,7 +1091,7 @@ function DashboardContent() {
                                 style={{ padding: '6px 12px', background: 'var(--emerald)', color: '#000', border: 'none', fontSize: '0.85rem', marginTop: '4px' }}
                                 onClick={() => {
                                   const payoutTK = Math.round((sub.ratePerMinute * sub.deliveredDuration) - ((sub.ratePerMinute * sub.deliveredDuration) * ((sub.penaltyPercent || 0) / 100)));
-                                  const defaultCutUSD = (payoutTK / 120).toFixed(2);
+                                  const defaultCutUSD = (payoutTK / exchangeRate).toFixed(2);
                                   setPayoutPrompt({
                                     isOpen: true,
                                     sub,
@@ -1191,7 +1203,7 @@ function DashboardContent() {
 
                                 // Marking as PAID
                                 const payoutTK = Math.round((sub.ratePerMinute * sub.deliveredDuration) - ((sub.ratePerMinute * sub.deliveredDuration) * ((sub.penaltyPercent || 0) / 100)));
-                                const defaultCutUSD = (payoutTK / 120).toFixed(2);
+                                const defaultCutUSD = (payoutTK / exchangeRate).toFixed(2);
                                 setPayoutPrompt({
                                   isOpen: true,
                                   sub,
@@ -1347,7 +1359,7 @@ function DashboardContent() {
                 <h3 style={{ margin: '0 0 16px 0', fontSize: '1.2rem', color: '#fff' }}>Confirm Editor Payout</h3>
                 <div style={{ marginBottom: '20px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
                   <p style={{ margin: '0 0 8px 0' }}>Payout is <strong>{payoutPrompt.payoutTK} TK</strong>.</p>
-                  <p style={{ margin: 0 }}>Auto-converted to USD (1 USD = 120 TK): <strong>${payoutPrompt.defaultCutUSD}</strong>.</p>
+                  <p style={{ margin: 0 }}>Auto-converted to USD (1 USD = {exchangeRate.toFixed(2)} TK): <strong>${payoutPrompt.defaultCutUSD}</strong>.</p>
                 </div>
                 <div className={styles.inputGroup} style={{ marginBottom: '24px' }}>
                   <input

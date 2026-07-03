@@ -166,7 +166,7 @@ export async function sendSubmissionEmail(adminEmail, submissionDetails, submitt
     const info = await transporter.sendMail({
       from: process.env.SMTP_FROM || '"Monolith Workflow" <noreply@monolith.com>',
       to: adminEmail,
-      subject: `Project Delivery & Invoice: ${submissionDetails.clientName}`,
+      subject: `Project Delivery & Invoice #${submissionDetails.invoiceNo || 'New'}: ${submissionDetails.clientName}`,
       text: `Hello,\n\nA new project delivery has been submitted by ${editorName}.\n\nClient: ${submissionDetails.clientName}\nVideo Link: ${submissionDetails.videoLink}\nDuration: ${submissionDetails.duration ? submissionDetails.duration + ' minutes' : 'N/A'}\n\nPlease check the dashboard for more details.\n\nBest,\nMonolith Team`,
       html: getModernEmailHtml('MONOLITH <span>WORKFLOW</span>', 'Project Delivery & Invoice Sent', htmlContent),
       attachments: pdfBuffer ? [
@@ -287,7 +287,7 @@ export async function sendReplyEmailToUser(userEmail, cardTitle, replyText, admi
   }
 }
 
-export async function sendInvoiceEmail(clientName, amount, profit, date) {
+export async function sendInvoiceEmail(clientName, amount, profit, date, invoiceNo) {
   try {
     const editorCut = amount - profit;
     const formattedDate = new Date(date).toLocaleDateString();
@@ -322,7 +322,7 @@ export async function sendInvoiceEmail(clientName, amount, profit, date) {
     const info = await transporter.sendMail({
       from: process.env.SMTP_FROM || '"Monolith Workflow" <noreply@monolith.com>',
       to: 'olialkonok2@gmail.com',
-      subject: `New Invoice Logged: ${clientName}`,
+      subject: `New Invoice Logged #${invoiceNo || 'New'}: ${clientName}`,
       text: `A new invoice has been logged.\n\nClient: ${clientName}\nRevenue: $${amount}\nProfit: $${profit}\nEditor Cut: $${editorCut}\nDate: ${formattedDate}\n`,
       html: getModernEmailHtml('MONOLITH <span>WORKFLOW</span>', 'New Invoice Logged', htmlContent),
     });

@@ -274,7 +274,7 @@ export async function POST(req) {
     const mailOptions = {
       from: emailFrom,
       to: clientEmail,
-      subject: `Invoice from Monolith Media - ${clientName}`,
+      subject: `Invoice from Monolith Media - ${invoiceNumber}`,
       html: htmlContent,
       attachments: [
         {
