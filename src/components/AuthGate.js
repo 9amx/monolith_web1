@@ -108,7 +108,7 @@ function AuthContent({ children }) {
       }
 
       if (isVerifyingLoginOtp) {
-        const res = await verifyLoginOtpAndLogin(email, otp);
+        const res = await verifyLoginOtpAndLogin(email, otp, inviteToken);
         if (res.error) {
           setError(res.error);
         } else {
@@ -119,7 +119,7 @@ function AuthContent({ children }) {
       }
 
       if (isLogin) {
-        const res = await login(email, password);
+        const res = await login(email, password, inviteToken);
         if (res.error) {
           setError(res.error);
         } else if (res.requires2FA) {

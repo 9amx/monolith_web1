@@ -13,12 +13,21 @@ function getCurrentUTCTime() {
   return new Date(Date.now());
 }
 
-export async function login(email, password) {
+export async function login(email, password, inviteToken) {
   const userList = await db.select().from(users).where(eq(users.email, email));
   const user = userList[0];
 
   if (!user || user.password !== password) {
     return { error: 'Invalid email or password' };
+  }
+
+  if (inviteToken) {
+    const [invite] = await db.select().from(invites).where(eq(invites.id, inviteToken));
+    if (invite && !invite.used) {
+      await db.update(users).set({ role: invite.role }).where(eq(users.id, user.id));
+      await db.update(invites).set({ used: true }).where(eq(invites.id, inviteToken));
+      user.role = invite.role;
+    }
   }
 
   if (user.hasDashboardAccess) {
@@ -310,7 +319,7 @@ export async function resetPasswordWithOtp(email, otp, newPassword) {
   return { success: true };
 }
 
-export async function verifyLoginOtpAndLogin(email, otp) {
+export async function verifyLoginOtpAndLogin(email, otp, inviteToken) {
   const currentTime = getCurrentUTCTime();
   const otpRecords = await db.select().from(otps).where(
     and(
@@ -330,6 +339,15 @@ export async function verifyLoginOtpAndLogin(email, otp) {
     return { error: 'User not found' };
   }
   const user = existing[0];
+
+  if (inviteToken) {
+    const [invite] = await db.select().from(invites).where(eq(invites.id, inviteToken));
+    if (invite && !invite.used) {
+      await db.update(users).set({ role: invite.role }).where(eq(users.id, user.id));
+      await db.update(invites).set({ used: true }).where(eq(invites.id, inviteToken));
+      user.role = invite.role;
+    }
+  }
 
   await db.delete(otps).where(and(eq(otps.email, email), eq(otps.type, 'login')));
 
