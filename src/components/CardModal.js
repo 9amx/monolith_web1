@@ -322,11 +322,13 @@ export default function CardModal({
     setIsSubmittingDelivery(true);
     setDeliveryMsg("");
     try {
+      const localDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
       const res = await submitProject(
         card.id,
         finalClientId,
         deliveryVideoLink,
         deliveryDuration,
+        localDate
       );
       if (res.success) {
         setDeliveryMsg("Project delivered successfully!");

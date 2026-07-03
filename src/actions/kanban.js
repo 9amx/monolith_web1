@@ -340,7 +340,7 @@ export async function updateBoardState(newColumns) {
   return { success: true };
 }
 
-export async function submitProject(cardId, clientId, videoLink, duration) {
+export async function submitProject(cardId, clientId, videoLink, duration, editorLocalDate) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
 
@@ -374,14 +374,18 @@ export async function submitProject(cardId, clientId, videoLink, duration) {
     clientInvoiceId,
   });
 
-  // Generate PDF Invoice
-  const invoiceData = {
+  const { generateInvoiceBuffer } = await import('../lib/generateInvoice.js');
+  
+  const bdDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Dhaka' });
+  const editorDate = editorLocalDate || bdDate;
+
+  // Base Invoice Data
+  const baseInvoiceData = {
     invoiceNo: clientInvoiceId,
     clientName: client.name,
     clientEmail: client.email || 'no-email@client.com',
     projectFileName: card.projectFileName,
     amount: card.clientPaymentAmount || 0,
-    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }),
     description: card.description || '',
     videoLink: videoLink,
     duration: parsedDuration ? `${parsedDuration} Minutes` : 'Unknown Duration',
@@ -397,20 +401,25 @@ export async function submitProject(cardId, clientId, videoLink, duration) {
     ]
   };
 
-  const { generateInvoiceBuffer } = await import('../lib/generateInvoice.js');
-  const pdfBuffer = await generateInvoiceBuffer(invoiceData);
+  // Generate PDF Invoice for Client (Bangladesh Time)
+  const clientInvoiceData = { ...baseInvoiceData, date: bdDate };
+  const clientPdfBuffer = await generateInvoiceBuffer(clientInvoiceData);
+
+  // Generate PDF Invoice for Admin/Editor (Editor Local Time)
+  const editorInvoiceData = { ...baseInvoiceData, date: editorDate };
+  const adminPdfBuffer = await generateInvoiceBuffer(editorInvoiceData);
 
   // Send invoice to client
-  const { sendClientInvoiceEmail } = await import('../lib/mailer.js');
+  const { sendClientInvoiceEmail, sendSubmissionEmail } = await import('../lib/mailer.js');
   if (client.email && client.email !== 'no-email@client.com') {
-    await sendClientInvoiceEmail(client.email, invoiceData, pdfBuffer);
+    await sendClientInvoiceEmail(client.email, clientInvoiceData, clientPdfBuffer);
   }
 
   // Log invoice in DB
   await db.insert(invoices).values({
     clientId,
-    amount: invoiceData.amount,
-    profit: invoiceData.amount,
+    amount: clientInvoiceData.amount,
+    profit: clientInvoiceData.amount,
   });
 
   // Notify all admins/super admins
@@ -427,7 +436,7 @@ export async function submitProject(cardId, clientId, videoLink, duration) {
         admin.email, 
         { clientName: client.name, cardTitle: card.title, projectFileName: card.projectFileName, videoLink, duration }, 
         submittedBy,
-        pdfBuffer
+        adminPdfBuffer
       );
     }
   }
