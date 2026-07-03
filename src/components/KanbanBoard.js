@@ -8,7 +8,7 @@ import InviteModal from './InviteModal';
 import TeamManagementModal from './TeamManagementModal';
 import ProfileModal from './ProfileModal';
 import ConfirmModal from './ConfirmModal';
-import { Plus, Search, Home, LayoutGrid, Share2, LogOut, Users, ChevronLeft, ChevronRight, BarChart2 } from 'lucide-react';
+import { Plus, Search, Home, LayoutGrid, Share2, LogOut, Users, ChevronLeft, ChevronRight, BarChart2, User } from 'lucide-react';
 import { useAuth } from './AuthContext';
 import { logout } from '@/actions/auth';
 import { getKanbanData, addCard, deleteCard, addColumn, updateBoardState, updateColumnOrder, updateCard, renameColumn, deleteColumn, addClientFromBoard } from '@/actions/kanban';
@@ -486,6 +486,9 @@ export default function KanbanBoard() {
           </button>
           <button className="kb-toolbar-btn" onClick={() => boardRef.current?.scrollTo({ left: boardRef.current?.scrollWidth || 0, behavior: 'smooth' })} title="Scroll to last list">
             <ChevronRight size={16} /> End
+          </button>
+          <button className="kb-toolbar-btn" onClick={() => setIsProfileOpen(true)} title="Edit Profile">
+            <User size={16} />
           </button>
           <button className="kb-toolbar-btn kb-toolbar-btn-danger" onClick={handleLogout} title="Log Out">
             <LogOut size={16} />
