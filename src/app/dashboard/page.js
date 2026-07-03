@@ -262,6 +262,91 @@ function DashboardContent() {
   const [newUserRole, setNewUserRole] = useState('User');
   const [newUserMsg, setNewUserMsg] = useState('');
 
+  const [payoutPrompt, setPayoutPrompt] = useState({ isOpen: false, sub: null, payoutTK: 0, defaultCutUSD: '', inputValue: '', actionType: '' });
+
+  const handlePayoutConfirm = async () => {
+    const { sub, inputValue: cut, payoutTK, actionType } = payoutPrompt;
+    setPayoutPrompt(prev => ({ ...prev, isOpen: false }));
+    
+    if (actionType === 'approve_and_pay') {
+      try {
+        if (cut && sub.editorEmail) {
+          const res = await fetch('/api/payout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              editorName: sub.editorName || 'Editor',
+              editorEmail: sub.editorEmail,
+              videoLink: sub.videoLink,
+              amount: payoutTK,
+              duration: sub.deliveredDuration || 'Project Duration',
+              itemTitle: sub.projectFileName || sub.cardTitle || 'Video Editing Service',
+              itemDescription: sub.description || 'Professional video editing including cuts, transitions, color grading, sound sync & effects.'
+            }),
+          });
+          
+          if (!res.ok) {
+            const errData = await res.json();
+            showToast(`Failed to send payout receipt: ${errData.message || 'Unknown error'}`, 'error');
+            return;
+          }
+          
+          const data = await res.json();
+          await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
+          await approveSubmissionAction(sub.id);
+          setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true, editorInvoiceId: data.invoiceId } : s));
+          showToast("Paid to Editor successfully, receipt sent, and moved to Payouts!", "success");
+        } else {
+          await markSubmissionPaidAction(sub.id, true, cut || null);
+          await approveSubmissionAction(sub.id);
+          setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true } : s));
+          showToast("Submission marked as paid and moved to Payouts!", "success");
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Failed to update status", "error");
+      }
+    } else if (actionType === 'just_pay') {
+      if (cut) {
+        if (!sub.editorEmail) {
+          showToast(`Cannot send payout receipt: Editor ${sub.editorName || 'Unknown'} does not have a valid email address.`, 'error');
+        } else {
+          try {
+            const res = await fetch('/api/payout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                editorName: sub.editorName || 'Editor',
+                editorEmail: sub.editorEmail,
+                videoLink: sub.videoLink,
+                amount: payoutTK,
+                duration: sub.deliveredDuration || 'Project Duration',
+                itemTitle: sub.projectFileName || sub.cardTitle || 'Video Editing Service',
+                itemDescription: sub.description || 'Professional video editing including cuts, transitions, color grading, sound sync & effects.'
+              }),
+            });
+            
+            if (!res.ok) {
+              const errData = await res.json();
+              showToast(`Failed to send payout receipt email: ${errData.message || 'Unknown error'}`, 'error');
+            } else {
+              const data = await res.json();
+              await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
+              setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, isPaid: true, editorInvoiceId: data.invoiceId } : s));
+              showToast("Payout receipt email sent successfully to the editor!", 'success');
+              return;
+            }
+          } catch (err) {
+            console.error("Failed to send payout receipt", err);
+            showToast("Error sending payout receipt email. Please check console.", 'error');
+          }
+        }
+      }
+      await markSubmissionPaidAction(sub.id, true, cut || null);
+      setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, isPaid: true } : s));
+    }
+  };
+
   // Load from DB on mount and start polling
   useEffect(() => {
     if (currentUser && !currentUser.hasDashboardAccess) {
@@ -992,49 +1077,17 @@ function DashboardContent() {
                               <button 
                                 className={styles.button}
                                 style={{ padding: '6px 12px', background: 'var(--emerald)', color: '#000', border: 'none', fontSize: '0.85rem', marginTop: '4px' }}
-                                onClick={async () => {
-                                  try {
-                                    const payoutTK = Math.round((sub.ratePerMinute * sub.deliveredDuration) - ((sub.ratePerMinute * sub.deliveredDuration) * ((sub.penaltyPercent || 0) / 100)));
-                                    const defaultCutUSD = (payoutTK / 120).toFixed(2);
-                                    const cut = window.prompt(`Payout is ${payoutTK} TK.\\nAuto-converted to USD (1 USD = 120 TK), it is $${defaultCutUSD}.\\n\\nEnter Editor Cut in USD to save for Profit calculation:`, defaultCutUSD);
-                                    if (cut === null) return; // User cancelled
-
-                                    if (cut && sub.editorEmail) {
-                                      const res = await fetch('/api/payout', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({
-                                          editorName: sub.editorName || 'Editor',
-                                          editorEmail: sub.editorEmail,
-                                          videoLink: sub.videoLink,
-                                          amount: payoutTK,
-                                          duration: sub.deliveredDuration || 'Project Duration',
-                                          itemTitle: sub.projectFileName || sub.cardTitle || 'Video Editing Service',
-                                          itemDescription: sub.description || 'Professional video editing including cuts, transitions, color grading, sound sync & effects.'
-                                        }),
-                                      });
-                                      
-                                      if (!res.ok) {
-                                        const errData = await res.json();
-                                        showToast(`Failed to send payout receipt: ${errData.message || 'Unknown error'}`, 'error');
-                                        return;
-                                      }
-                                      
-                                      const data = await res.json();
-                                      await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
-                                      await approveSubmissionAction(sub.id);
-                                      setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true, editorInvoiceId: data.invoiceId } : s));
-                                      showToast("Paid to Editor successfully, receipt sent, and moved to Payouts!", "success");
-                                    } else {
-                                      await markSubmissionPaidAction(sub.id, true, cut || null);
-                                      await approveSubmissionAction(sub.id);
-                                      setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true } : s));
-                                      showToast("Submission marked as paid and moved to Payouts!", "success");
-                                    }
-                                  } catch (err) {
-                                    console.error(err);
-                                    showToast("Failed to update status", "error");
-                                  }
+                                onClick={() => {
+                                  const payoutTK = Math.round((sub.ratePerMinute * sub.deliveredDuration) - ((sub.ratePerMinute * sub.deliveredDuration) * ((sub.penaltyPercent || 0) / 100)));
+                                  const defaultCutUSD = (payoutTK / 120).toFixed(2);
+                                  setPayoutPrompt({
+                                    isOpen: true,
+                                    sub,
+                                    payoutTK,
+                                    defaultCutUSD,
+                                    inputValue: defaultCutUSD,
+                                    actionType: 'approve_and_pay'
+                                  });
                                 }}
                               >
                                 Paid to Editor
@@ -1135,51 +1188,14 @@ function DashboardContent() {
                                 // Marking as PAID
                                 const payoutTK = Math.round((sub.ratePerMinute * sub.deliveredDuration) - ((sub.ratePerMinute * sub.deliveredDuration) * ((sub.penaltyPercent || 0) / 100)));
                                 const defaultCutUSD = (payoutTK / 120).toFixed(2);
-                                const cut = window.prompt(`Payout is ${payoutTK} TK.\\nAuto-converted to USD (1 USD = 120 TK), it is $${defaultCutUSD}.\\n\\nEnter Editor Cut in USD to save for Profit calculation:`, defaultCutUSD);
-                                
-                                if (cut === null) return; // User cancelled
-
-                                const executeMarkPaid = async () => {
-                                  if (cut) {
-                                    if (!sub.editorEmail) {
-                                      showToast(`Cannot send payout receipt: Editor ${sub.editorName || 'Unknown'} does not have a valid email address.`, 'error');
-                                    } else {
-                                      try {
-                                        const res = await fetch('/api/payout', {
-                                          method: 'POST',
-                                          headers: { 'Content-Type': 'application/json' },
-                                          body: JSON.stringify({
-                                            editorName: sub.editorName || 'Editor',
-                                            editorEmail: sub.editorEmail,
-                                            videoLink: sub.videoLink,
-                                            amount: payoutTK,
-                                            duration: sub.deliveredDuration || 'Project Duration',
-                                            itemTitle: sub.projectFileName || sub.cardTitle || 'Video Editing Service',
-                                            itemDescription: sub.description || 'Professional video editing including cuts, transitions, color grading, sound sync & effects.'
-                                          }),
-                                        });
-                                        
-                                        if (!res.ok) {
-                                          const errData = await res.json();
-                                          showToast(`Failed to send payout receipt email: ${errData.message || 'Unknown error'}`, 'error');
-                                        } else {
-                                          const data = await res.json();
-                                          await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
-                                          setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, isPaid: true, editorInvoiceId: data.invoiceId } : s));
-                                          showToast("Payout receipt email sent successfully to the editor!", 'success');
-                                          return;
-                                        }
-                                      } catch (err) {
-                                        console.error("Failed to send payout receipt", err);
-                                        showToast("Error sending payout receipt email. Please check console.", 'error');
-                                      }
-                                    }
-                                  }
-                                  await markSubmissionPaidAction(sub.id, true, cut || null);
-                                  setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, isPaid: true } : s));
-                                };
-
-                                executeMarkPaid();
+                                setPayoutPrompt({
+                                  isOpen: true,
+                                  sub,
+                                  payoutTK,
+                                  defaultCutUSD,
+                                  inputValue: defaultCutUSD,
+                                  actionType: 'just_pay'
+                                });
                               }}
                             >
                               {sub.isPaid ? 'Mark Unpaid' : 'Mark as Paid'}
@@ -1306,6 +1322,64 @@ function DashboardContent() {
             </motion.div>
           )}
         </FramerAnimatePresence>
+
+        <AnimatePresence>
+          {payoutPrompt.isOpen && (
+            <div className="invite-modal-overlay">
+              <motion.div 
+                className="invite-modal-content"
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                transition={{ duration: 0.2 }}
+                style={{ maxWidth: '400px', width: '100%', padding: '32px 24px', position: 'relative' }}
+              >
+                <button 
+                  onClick={() => setPayoutPrompt(prev => ({ ...prev, isOpen: false }))}
+                  style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', border: 'none', color: 'var(--text-grey)', cursor: 'pointer' }}
+                >
+                  <XCircle size={20} />
+                </button>
+                <h3 style={{ margin: '0 0 16px 0', fontSize: '1.2rem', color: '#fff' }}>Confirm Editor Payout</h3>
+                <div style={{ marginBottom: '20px', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+                  <p style={{ margin: '0 0 8px 0' }}>Payout is <strong>{payoutPrompt.payoutTK} TK</strong>.</p>
+                  <p style={{ margin: 0 }}>Auto-converted to USD (1 USD = 120 TK): <strong>${payoutPrompt.defaultCutUSD}</strong>.</p>
+                </div>
+                <div className={styles.inputGroup} style={{ marginBottom: '24px' }}>
+                  <input
+                    type="number"
+                    step="0.01"
+                    className={styles.input}
+                    placeholder=" "
+                    value={payoutPrompt.inputValue}
+                    onChange={(e) => setPayoutPrompt(prev => ({ ...prev, inputValue: e.target.value }))}
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handlePayoutConfirm();
+                    }}
+                  />
+                  <label className={styles.label}>Enter Editor Cut in USD (for Profit calculation)</label>
+                </div>
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                  <button 
+                    onClick={() => setPayoutPrompt(prev => ({ ...prev, isOpen: false }))}
+                    className="kb-toolbar-btn"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handlePayoutConfirm}
+                    className="kb-toolbar-btn kb-toolbar-btn-primary"
+                    style={{ flex: 1, justifyContent: 'center' }}
+                  >
+                    Save & Pay
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
 
         <ConfirmModal
           isOpen={!!confirmDialog}
