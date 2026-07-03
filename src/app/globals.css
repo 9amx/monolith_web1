@@ -1153,7 +1153,17 @@ body { cursor: none; }
   .kb-page-title { font-size: 20px; }
   .kb-toolbar { flex-direction: column; align-items: flex-start; gap: 12px; padding: 12px 0; }
   .kb-toolbar-left { width: 100%; justify-content: space-between; }
-  .kb-toolbar-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 6px; }
+  .kb-toolbar-right { 
+    width: 100%; 
+    justify-content: flex-start; 
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    gap: 8px; 
+    padding-bottom: 6px; /* give room for subtle shadow */
+    scrollbar-width: none; 
+  }
+  .kb-toolbar-right::-webkit-scrollbar { display: none; }
   .kb-search-input { width: 100%; }
   .kanban-board-container {
     padding: 0 16px 100px;
@@ -1174,8 +1184,11 @@ body { cursor: none; }
     min-height: 140px;
   }
   .kb-toolbar-btn {
-    min-width: 110px;
-    flex: 1 1 auto;
+    min-width: max-content;
+    flex: 0 0 auto;
+  }
+  .kb-avatars {
+    flex: 0 0 auto;
   }
   .cm-panel { width: 100vw; }
   .cm-layout { flex-direction: column; overflow-y: auto; }
