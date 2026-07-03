@@ -8,6 +8,11 @@ import { unstable_noStore as noStore } from 'next/cache';
 import crypto from 'crypto';
 import { sendOtpEmail } from '@/lib/mailer';
 
+// Helper function to get current UTC time
+function getCurrentUTCTime() {
+  return new Date(Date.now());
+}
+
 export async function login(email, password) {
   const userList = await db.select().from(users).where(eq(users.email, email));
   const user = userList[0];
@@ -232,12 +237,13 @@ export async function requestSignupOtp(email) {
 }
 
 export async function verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken) {
+  const currentTime = getCurrentUTCTime();
   const otpRecords = await db.select().from(otps).where(
     and(
       eq(otps.email, email), 
       eq(otps.type, 'signup'),
       eq(otps.code, otp),
-      gte(otps.expiresAt, new Date())
+      gte(otps.expiresAt, currentTime)
     )
   );
 
@@ -277,12 +283,13 @@ export async function requestResetOtp(email) {
 }
 
 export async function resetPasswordWithOtp(email, otp, newPassword) {
+  const currentTime = getCurrentUTCTime();
   const otpRecords = await db.select().from(otps).where(
     and(
       eq(otps.email, email), 
       eq(otps.type, 'reset'),
       eq(otps.code, otp),
-      gte(otps.expiresAt, new Date())
+      gte(otps.expiresAt, currentTime)
     )
   );
 
@@ -304,12 +311,13 @@ export async function resetPasswordWithOtp(email, otp, newPassword) {
 }
 
 export async function verifyLoginOtpAndLogin(email, otp) {
+  const currentTime = getCurrentUTCTime();
   const otpRecords = await db.select().from(otps).where(
     and(
       eq(otps.email, email), 
       eq(otps.type, 'login'),
       eq(otps.code, otp),
-      gte(otps.expiresAt, new Date())
+      gte(otps.expiresAt, currentTime)
     )
   );
 
@@ -338,3 +346,4 @@ export async function verifyLoginOtpAndLogin(email, otp) {
 
   return { success: true, user };
 }
+
