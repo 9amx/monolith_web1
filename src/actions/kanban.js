@@ -424,32 +424,15 @@ export async function submitProject(cardId, clientId, videoLink, duration, edito
   const editorInvoiceData = { ...baseInvoiceData, date: editorDate };
   const adminPdfBuffer = await generateInvoiceBuffer(editorInvoiceData);
 
-  // Send invoice to client
-  const { sendClientInvoiceEmail, sendSubmissionEmail } = await import('../lib/mailer.js');
-  if (client.email && client.email !== 'no-email@client.com') {
-    await sendClientInvoiceEmail(client.email, clientInvoiceData, clientPdfBuffer);
-  }
+  // Automatic email notifications for video submission and invoice delivery are disabled.
+  console.log('Skipping automatic submission/invoice emails for card submission', {
+    cardId,
+    clientId,
+    clientInvoiceId,
+    clientEmail: client.email,
+  });
 
   // Invoice is NO LONGER logged in DB here. It will be logged upon approval in dashboard.
-
-  // Notify all admins/super admins
-  const adminUsers = await db.select().from(users).where(inArray(users.role, ['Admin', 'Super Admin']));
-  const submittedBy = {
-    name: user.name,
-    email: user.email,
-    username: user.username
-  };
-
-  for (const admin of adminUsers) {
-    if (admin.email) {
-      await sendSubmissionEmail(
-        admin.email, 
-        { clientName: client.name, cardTitle: card.title, projectFileName: card.projectFileName, videoLink, duration, invoiceNo: clientInvoiceId }, 
-        submittedBy,
-        adminPdfBuffer
-      );
-    }
-  }
 
   return { success: true };
 }
