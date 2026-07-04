@@ -1324,7 +1324,7 @@ function DashboardContent() {
               >
                 <h3 style={{ margin: '0 0 10px', fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-white)' }}>Dashboard Users</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {allUsers.filter(u => u.hasDashboardAccess || ['Admin', 'Super Admin', 'Editor'].includes(u.role)).map(u => (
+                  {allUsers.filter(u => ['Admin', 'Super Admin'].includes(u.role)).map(u => (
                     <div key={u.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff0a', padding: '10px', borderRadius: '8px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: `url(${u.avatarUrl}) center/cover` }}></div>
