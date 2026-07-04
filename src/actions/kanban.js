@@ -299,11 +299,13 @@ export async function notifyNewAssignees(cardId, assigneeIds) {
 
   const assignedBy = user.name || user.email.split('@')[0];
 
-  for (const assignedUser of newlyAssignedUsers) {
+  const emailPromises = newlyAssignedUsers.map(assignedUser => 
     sendCardAssignmentEmail(assignedUser.email, cardDetails, assignedBy).catch(err => {
       console.error("Failed to send assignment email:", err);
-    });
-  }
+    })
+  );
+  
+  await Promise.all(emailPromises);
 
   return { success: true };
 }
