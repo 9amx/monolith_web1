@@ -428,12 +428,7 @@ export async function submitProject(cardId, clientId, videoLink, duration, edito
     await sendClientInvoiceEmail(client.email, clientInvoiceData, clientPdfBuffer);
   }
 
-  // Log invoice in DB
-  await db.insert(invoices).values({
-    clientId,
-    amount: clientInvoiceData.amount,
-    profit: clientInvoiceData.amount,
-  });
+  // Invoice is NO LONGER logged in DB here. It will be logged upon approval in dashboard.
 
   // Notify all admins/super admins
   const adminUsers = await db.select().from(users).where(inArray(users.role, ['Admin', 'Super Admin']));

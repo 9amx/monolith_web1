@@ -189,6 +189,27 @@ export async function approveSubmissionAction(id) {
   const user = await getCurrentUser();
   if (!user || !user.hasDashboardAccess) throw new Error("Unauthorized");
 
+  // Get the submission to find clientId and card
+  const sub = await db.select().from(submissions).where(eq(submissions.id, id));
+  if (sub.length > 0) {
+    const currentSub = sub[0];
+    
+    // Check if it's already approved to avoid double logging
+    if (currentSub.status !== 'approved') {
+      const card = await db.select().from(cards).where(eq(cards.id, currentSub.cardId));
+      if (card.length > 0) {
+        const amount = card[0].clientPaymentAmount || 0;
+        
+        // Log invoice in DB
+        await db.insert(invoices).values({
+          clientId: currentSub.clientId,
+          amount: amount,
+          profit: amount,
+        });
+      }
+    }
+  }
+
   await db.update(submissions)
     .set({ status: 'approved' })
     .where(eq(submissions.id, id));

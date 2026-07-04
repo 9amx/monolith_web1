@@ -333,13 +333,13 @@ function DashboardContent() {
           }
           
           const data = await res.json();
-          await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
           await approveSubmissionAction(sub.id);
+          await markSubmissionPaidAction(sub.id, true, cut, data.invoiceId);
           setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true, editorInvoiceId: data.invoiceId } : s));
           showToast("Paid to Editor successfully, receipt sent, and moved to Payouts!", "success");
         } else {
-          await markSubmissionPaidAction(sub.id, true, cut || null);
           await approveSubmissionAction(sub.id);
+          await markSubmissionPaidAction(sub.id, true, cut || null);
           setSubmissions(submissions.map(s => s.id === sub.id ? { ...s, status: 'approved', isPaid: true } : s));
           showToast("Submission marked as paid and moved to Payouts!", "success");
         }
