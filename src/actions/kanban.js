@@ -84,8 +84,7 @@ export async function getKanbanData() {
 
     return data;
   } catch (err) {
-    const fs = require('fs');
-    fs.writeFileSync('d:\\Monolith\\get_kanban_error.log', err.stack || err.message);
+    console.error('[getKanbanData] Error:', err.stack || err.message);
     throw err;
   }
 }
