@@ -22,6 +22,10 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [name, setName] = useState('');
+  const [bankDetails, setBankDetails] = useState('');
+  const [rocketAccount, setRocketAccount] = useState('');
+  const [binancePayId, setBinancePayId] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   
@@ -71,7 +75,8 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
     
     startTransition(async () => {
       if (isVerifyingSignupOtp) {
-        const res = await verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken);
+        const paymentDetails = inviteRole === 'Editor' ? { bankDetails, rocketAccount, binancePayId } : {};
+        const res = await verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken, paymentDetails);
         if (res.error) {
           setError(res.error);
         } else {
@@ -212,6 +217,65 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
                     required
                   />
                 </div>
+              )}
+              {!isForgotPassword && !isLogin && inviteRole === 'Editor' && (
+                <>
+                  <div className="auth-input-group" style={{ flexDirection: 'column', alignItems: 'flex-start', padding: '12px' }}>
+                    <label style={{ fontSize: '13px', color: 'var(--text-grey)', marginBottom: '8px' }}>Payment Method Required</label>
+                    <select 
+                      value={selectedPaymentMethod} 
+                      onChange={(e) => {
+                        setSelectedPaymentMethod(e.target.value);
+                        setBankDetails('');
+                        setRocketAccount('');
+                        setBinancePayId('');
+                      }}
+                      style={{ width: '100%', background: 'transparent', border: 'none', color: selectedPaymentMethod ? '#fff' : 'var(--text-grey)', outline: 'none', cursor: 'pointer' }}
+                      required
+                    >
+                      <option value="" disabled>Choose a payment method...</option>
+                      <option value="bank" style={{ color: '#000' }}>Bank Account</option>
+                      <option value="rocket" style={{ color: '#000' }}>Rocket Account</option>
+                      <option value="binance" style={{ color: '#000' }}>Binance Pay</option>
+                    </select>
+                  </div>
+                  {selectedPaymentMethod === 'bank' && (
+                    <div className="auth-input-group">
+                      <input
+                        type="text"
+                        placeholder="Bank Account Details *"
+                        value={bankDetails}
+                        onChange={(e) => setBankDetails(e.target.value)}
+                        style={{ paddingLeft: '12px' }}
+                        required
+                      />
+                    </div>
+                  )}
+                  {selectedPaymentMethod === 'rocket' && (
+                    <div className="auth-input-group">
+                      <input
+                        type="text"
+                        placeholder="Rocket Account No. *"
+                        value={rocketAccount}
+                        onChange={(e) => setRocketAccount(e.target.value)}
+                        style={{ paddingLeft: '12px' }}
+                        required
+                      />
+                    </div>
+                  )}
+                  {selectedPaymentMethod === 'binance' && (
+                    <div className="auth-input-group">
+                      <input
+                        type="text"
+                        placeholder="Binance Pay ID *"
+                        value={binancePayId}
+                        onChange={(e) => setBinancePayId(e.target.value)}
+                        style={{ paddingLeft: '12px' }}
+                        required
+                      />
+                    </div>
+                  )}
+                </>
               )}
               <div className="auth-input-group">
                 <Mail size={16} />

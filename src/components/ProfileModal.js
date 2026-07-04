@@ -14,6 +14,12 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
   const [username, setUsername] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  
+  const [bankDetails, setBankDetails] = useState('');
+  const [rocketAccount, setRocketAccount] = useState('');
+  const [binancePayId, setBinancePayId] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState(null);
 
@@ -22,6 +28,16 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
       setName(currentUser.name || '');
       setUsername(currentUser.username || '');
       setAvatarUrl(currentUser.avatarUrl || '');
+      
+      setBankDetails(currentUser.bankDetails || '');
+      setRocketAccount(currentUser.rocketAccount || '');
+      setBinancePayId(currentUser.binancePayId || '');
+      
+      if (currentUser.bankDetails) setSelectedPaymentMethod('bank');
+      else if (currentUser.rocketAccount) setSelectedPaymentMethod('rocket');
+      else if (currentUser.binancePayId) setSelectedPaymentMethod('binance');
+      else setSelectedPaymentMethod('');
+
       setNewPassword('');
       setSaveMessage(null);
     }
@@ -41,7 +57,14 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
     setIsSaving(true);
     setSaveMessage(null);
     try {
-      const res = await updateUserProfile({ name, username, avatarUrl });
+      const res = await updateUserProfile({ 
+        name, 
+        username, 
+        avatarUrl,
+        bankDetails: selectedPaymentMethod === 'bank' ? bankDetails : null,
+        rocketAccount: selectedPaymentMethod === 'rocket' ? rocketAccount : null,
+        binancePayId: selectedPaymentMethod === 'binance' ? binancePayId : null
+      });
       let passRes = { success: true };
       if (newPassword.trim()) {
         passRes = await changePassword(newPassword.trim());
@@ -68,6 +91,9 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
     name !== (currentUser?.name || '') || 
     username !== (currentUser?.username || '') || 
     avatarUrl !== (currentUser?.avatarUrl || '') ||
+    (selectedPaymentMethod === 'bank' ? bankDetails : '') !== (currentUser?.bankDetails || '') ||
+    (selectedPaymentMethod === 'rocket' ? rocketAccount : '') !== (currentUser?.rocketAccount || '') ||
+    (selectedPaymentMethod === 'binance' ? binancePayId : '') !== (currentUser?.binancePayId || '') ||
     newPassword.length > 0;
 
   return (
@@ -232,8 +258,61 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
                   onChange={(e) => setUsername(e.target.value.replace(/[^a-zA-Z0-9_.-]/g, ''))}
                 />
               </div>
+              
+              {currentUser?.role === 'Editor' && (
+                <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '16px' }}>
+                  <label style={{ fontSize: '13px', color: 'var(--text-grey)', marginBottom: '12px', display: 'block', fontWeight: 600 }}>Payment Method (For Editor Payouts)</label>
+                  <select 
+                    value={selectedPaymentMethod} 
+                    onChange={(e) => {
+                      setSelectedPaymentMethod(e.target.value);
+                      if (e.target.value !== 'bank') setBankDetails('');
+                      if (e.target.value !== 'rocket') setRocketAccount('');
+                      if (e.target.value !== 'binance') setBinancePayId('');
+                    }}
+                    style={{ width: '100%', background: 'var(--bg-dark)', border: '1px solid rgba(255,255,255,0.1)', color: selectedPaymentMethod ? '#fff' : 'var(--text-grey)', outline: 'none', padding: '10px 12px', borderRadius: '6px', marginBottom: '12px', cursor: 'pointer' }}
+                  >
+                    <option value="" disabled>Choose a payment method...</option>
+                    <option value="bank" style={{ color: '#000' }}>Bank Account</option>
+                    <option value="rocket" style={{ color: '#000' }}>Rocket Account</option>
+                    <option value="binance" style={{ color: '#000' }}>Binance Pay</option>
+                  </select>
 
-
+                  {selectedPaymentMethod === 'bank' && (
+                    <div className="profile-field" style={{ marginBottom: 0 }}>
+                      <input
+                        type="text"
+                        placeholder="Bank Account Details"
+                        value={bankDetails}
+                        onChange={(e) => setBankDetails(e.target.value)}
+                        style={{ marginTop: 0 }}
+                      />
+                    </div>
+                  )}
+                  {selectedPaymentMethod === 'rocket' && (
+                    <div className="profile-field" style={{ marginBottom: 0 }}>
+                      <input
+                        type="text"
+                        placeholder="Rocket Account No."
+                        value={rocketAccount}
+                        onChange={(e) => setRocketAccount(e.target.value)}
+                        style={{ marginTop: 0 }}
+                      />
+                    </div>
+                  )}
+                  {selectedPaymentMethod === 'binance' && (
+                    <div className="profile-field" style={{ marginBottom: 0 }}>
+                      <input
+                        type="text"
+                        placeholder="Binance Pay ID"
+                        value={binancePayId}
+                        onChange={(e) => setBinancePayId(e.target.value)}
+                        style={{ marginTop: 0 }}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="profile-field">
                 <label><Lock size={14} /> Change Password</label>

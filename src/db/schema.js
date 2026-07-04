@@ -5,10 +5,13 @@ export const users = pgTable('users', {
   email: text('email').notNull().unique(),
   username: text('username'),
   name: text('name'),
-  role: text('role').notNull().default('Viewer'), // Super Admin, Admin, Viewer
+  role: text('role').notNull().default('Viewer'), // Super Admin, Admin, Editor, Viewer
   password: text('password').notNull(),
   avatarUrl: text('avatar_url'),
   hasDashboardAccess: boolean('has_dashboard_access').default(false).notNull(),
+  bankDetails: text('bank_details'),
+  rocketAccount: text('rocket_account'),
+  binancePayId: text('binance_pay_id'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 

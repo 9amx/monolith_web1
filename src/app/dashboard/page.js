@@ -1054,6 +1054,14 @@ function DashboardContent() {
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Client Payment Amount: <strong style={{ color: '#fff' }}>${sub.clientPaymentAmount}</strong></span>
                             )}
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Editor: {sub.editorName ? `${sub.editorName} (${sub.editorEmail})` : sub.editorEmail}</span>
+                            {(sub.editorBankDetails || sub.editorRocketAccount || sub.editorBinancePayId) && (
+                              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-grey)', marginBottom: '4px', textTransform: 'uppercase' }}>Editor Payment Details</div>
+                                {sub.editorBankDetails && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Bank:</span> {sub.editorBankDetails}</div>}
+                                {sub.editorRocketAccount && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Rocket:</span> {sub.editorRocketAccount}</div>}
+                                {sub.editorBinancePayId && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Binance Pay ID:</span> {sub.editorBinancePayId}</div>}
+                              </div>
+                            )}
                             {sub.deliveredDuration && (
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                                 Duration: <strong style={{ color: '#fff' }}>{sub.deliveredDuration} minutes</strong>
@@ -1161,6 +1169,14 @@ function DashboardContent() {
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Client Payment Amount: <strong style={{ color: '#fff' }}>${sub.clientPaymentAmount}</strong></span>
                             )}
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Editor: {sub.editorName ? `${sub.editorName} (${sub.editorEmail})` : sub.editorEmail}</span>
+                            {(sub.editorBankDetails || sub.editorRocketAccount || sub.editorBinancePayId) && (
+                              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-grey)', marginBottom: '4px', textTransform: 'uppercase' }}>Editor Payment Details</div>
+                                {sub.editorBankDetails && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Bank:</span> {sub.editorBankDetails}</div>}
+                                {sub.editorRocketAccount && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Rocket:</span> {sub.editorRocketAccount}</div>}
+                                {sub.editorBinancePayId && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Binance Pay ID:</span> {sub.editorBinancePayId}</div>}
+                              </div>
+                            )}
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Duration: <strong style={{ color: '#fff' }}>{sub.deliveredDuration || 0} minutes</strong></span>
                             {(sub.ratePerMinute && sub.deliveredDuration) && (
                               <span style={{ color: 'var(--emerald)', fontSize: '0.85rem', fontWeight: 600 }}>

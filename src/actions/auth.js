@@ -60,7 +60,7 @@ export async function login(email, password, inviteToken) {
   return { success: true, user };
 }
 
-export async function signup(email, password, name, inviteToken) {
+export async function signup(email, password, name, inviteToken, paymentDetails = {}) {
   const existing = await db.select().from(users).where(eq(users.email, email));
   if (existing.length > 0) {
     return { error: 'An account with this email already exists' };
@@ -99,7 +99,10 @@ export async function signup(email, password, name, inviteToken) {
     name: finalName,
     role: assignedRole,
     avatarUrl,
-    hasDashboardAccess
+    hasDashboardAccess,
+    bankDetails: paymentDetails.bankDetails || null,
+    rocketAccount: paymentDetails.rocketAccount || null,
+    binancePayId: paymentDetails.binancePayId || null
   }).returning();
 
   const cookieStore = await cookies();
@@ -204,14 +207,18 @@ export async function toggleDashboardAccess(userId, hasAccess) {
   return { success: true };
 }
 
-export async function updateUserProfile({ name, username, avatarUrl }) {
+export async function updateUserProfile({ name, username, avatarUrl, bankDetails, rocketAccount, binancePayId }) {
   const user = await getCurrentUser();
-  if (!user) return { error: 'Unauthorized' };
+  if (!user) return { error: 'Not authenticated' };
 
   const updateData = {};
   if (name !== undefined) updateData.name = name.trim();
   if (username !== undefined) updateData.username = username.trim();
   if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl.trim() || null;
+  
+  if (bankDetails !== undefined) updateData.bankDetails = bankDetails.trim() || null;
+  if (rocketAccount !== undefined) updateData.rocketAccount = rocketAccount.trim() || null;
+  if (binancePayId !== undefined) updateData.binancePayId = binancePayId.trim() || null;
 
   if (Object.keys(updateData).length === 0) return { error: 'No changes provided' };
 
@@ -245,7 +252,7 @@ export async function requestSignupOtp(email) {
   return { success: true };
 }
 
-export async function verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken) {
+export async function verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken, paymentDetails = {}) {
   const currentTime = getCurrentUTCTime();
   const otpRecords = await db.select().from(otps).where(
     and(
@@ -260,7 +267,7 @@ export async function verifySignupOtpAndCreateUser(email, otp, password, name, i
     return { error: 'Invalid or expired OTP' };
   }
 
-  const res = await signup(email, password, name, inviteToken);
+  const res = await signup(email, password, name, inviteToken, paymentDetails);
   if (res.error) return res;
 
   await db.delete(otps).where(and(eq(otps.email, email), eq(otps.type, 'signup')));
