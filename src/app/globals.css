@@ -1271,18 +1271,33 @@ input:-webkit-autofill:active {
 .team-list { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; max-height: 400px; overflow-y: auto; padding-right: 8px; }
 .team-list::-webkit-scrollbar { width: 4px; }
 .team-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-.team-member-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-.team-member-info { display: flex; align-items: center; gap: 12px; }
-.team-member-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--emerald), #10b981); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; text-transform: uppercase; }
-.team-member-name { font-size: 15px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 8px; }
-.team-member-email { font-size: 13px; color: var(--text-grey); }
-.team-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; }
+.team-member-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 16px; background: rgba(255,255,255,0.03);
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+  gap: 12px; flex-wrap: wrap;
+}
+.team-member-info { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+.team-member-info > div:last-child { min-width: 0; flex: 1; }
+.team-member-avatar {
+  width: 40px; height: 40px; min-width: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--emerald), #10b981);
+  color: #000; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px; text-transform: uppercase;
+}
+.team-member-name {
+  font-size: 14px; font-weight: 600; color: #fff;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.team-member-email { font-size: 12px; color: var(--text-grey); word-break: break-all; line-height: 1.4; }
+.team-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px; display: inline-flex; align-items: center; white-space: nowrap; }
 .team-badge.self { background: rgba(255,255,255,0.1); color: #fff; }
 .team-badge.role-superadmin { background: rgba(239,68,68,0.1); color: #ef4444; }
 .team-badge.role-admin { background: rgba(59,130,246,0.1); color: #3b82f6; }
 .team-badge.role-editor { background: rgba(52,211,153,0.1); color: var(--emerald); }
 .team-badge.role-viewer { background: rgba(156,163,175,0.1); color: #9ca3af; }
-.team-member-actions { display: flex; align-items: center; gap: 12px; }
+.team-badge.role-client { background: rgba(245,158,11,0.1); color: #f59e0b; }
+.team-member-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .team-remove-btn { background: transparent; border: none; color: rgba(239,68,68,0.5); cursor: pointer; padding: 6px; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
 .team-remove-btn:hover { background: rgba(239,68,68,0.1); color: #ef4444; }
 .invite-link-box { display: flex; align-items: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; }
@@ -1416,3 +1431,40 @@ input:-webkit-autofill:active {
 
 @keyframes profileSpin { to { transform: rotate(360deg); } }
 .profile-spinner { animation: profileSpin 1s linear infinite; }
+
+/* ==========================================================
+   MOBILE RESPONSIVE - TEAM MANAGEMENT & MODALS
+   ========================================================== */
+@media (max-width: 520px) {
+  /* Modal */
+  .invite-modal-overlay { padding: 12px; align-items: flex-end; }
+  .invite-modal-content { padding: 24px 18px; border-radius: 16px 16px 0 0; max-width: 100%; max-height: 90vh; overflow-y: auto; }
+  .invite-header h2 { font-size: 18px; }
+  .invite-icon-wrapper { width: 48px; height: 48px; margin-bottom: 12px; }
+
+  /* Team member row - stack vertically */
+  .team-member-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+    gap: 12px;
+  }
+  .team-member-info { gap: 10px; }
+  .team-member-avatar { width: 36px; height: 36px; min-width: 36px; font-size: 13px; }
+  .team-member-name { font-size: 13px; gap: 6px; }
+  .team-member-email { font-size: 11px; }
+  .team-member-actions {
+    justify-content: flex-end;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .team-member-actions .custom-select-container { min-width: 100px; }
+  .custom-select-trigger { padding: 0.6rem 1rem; font-size: 13px; }
+  .team-list { max-height: 55vh; padding-right: 4px; }
+
+  /* Profile modal */
+  .profile-modal-overlay { padding: 12px; }
+  .profile-modal-content { padding: 24px 18px; max-width: 100%; }
+  .profile-actions { flex-direction: column; }
+  .profile-actions button { width: 100%; justify-content: center; }
+}

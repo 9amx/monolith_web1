@@ -96,10 +96,10 @@ export default function TeamManagementModal({ isOpen, onClose }) {
                         <div className="team-member-name">
                           {u.name || u.username || u.email.split('@')[0]} {isSelf && <span className="team-badge self">You</span>}
                         </div>
-                        <div className="team-member-email" style={{ color: 'var(--emerald)', wordBreak: 'break-all' }}>
-                          @{u.username || u.email.split('@')[0]}
+                        <div className="team-member-email">
+                          <span style={{ color: 'var(--emerald)' }}>@{u.username || u.email.split('@')[0]}</span>
                           {(isAdmin || isSuperAdmin) && (
-                            <div style={{ color: 'var(--text-muted)', fontSize: '0.85em', fontWeight: 'normal', marginTop: '2px' }}>
+                            <div style={{ color: 'var(--text-muted)', fontSize: '0.85em', marginTop: '2px' }}>
                               {u.email}
                             </div>
                           )}
@@ -117,14 +117,13 @@ export default function TeamManagementModal({ isOpen, onClose }) {
                               { value: 'Editor', label: 'Editor' },
                               { value: 'Client', label: 'Client' },
                             ]}
-                            onChange={(newRole) => {
+                          onChange={(newRole) => {
                               startTransition(async () => {
                                 const { updateUserRole } = await import('@/actions/auth');
                                 await updateUserRole(u.id, newRole);
                                 loadUsers();
                               });
                             }}
-                            style={{ width: '120px', marginRight: '12px' }}
                           />
                         </div>
                       ) : (
