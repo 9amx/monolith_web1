@@ -36,15 +36,14 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
       setName(currentUser.name || '');
       setUsername(currentUser.username || '');
       setAvatarUrl(currentUser.avatarUrl || '');
-      
       let initialBank = { bankName: '', accountNumber: '', holderName: '' };
-      try { initialBank = JSON.parse(currentUser.bankDetails); } catch(e) {}
+      try { const b = JSON.parse(currentUser.bankDetails); if (b && typeof b === 'object') initialBank = b; } catch(e) {}
       
       let initialRocket = { rocketNumber: '', rocketName: '' };
-      try { initialRocket = JSON.parse(currentUser.rocketAccount); } catch(e) {}
+      try { const r = JSON.parse(currentUser.rocketAccount); if (r && typeof r === 'object') initialRocket = r; } catch(e) {}
       
       let initialBinance = { binancePayId: '', binanceName: '' };
-      try { initialBinance = JSON.parse(currentUser.binancePayId); } catch(e) {}
+      try { const bn = JSON.parse(currentUser.binancePayId); if (bn && typeof bn === 'object') initialBinance = bn; } catch(e) {}
 
       setBankName(initialBank.bankName || currentUser.bankDetails || '');
       setBankAccountNumber(initialBank.accountNumber || '');
