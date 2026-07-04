@@ -61,13 +61,15 @@ export async function generateInvoiceBuffer(invoiceData) {
       let rightY = 60;
       
       doc.fillColor(white).font('Helvetica-Bold').fontSize(14).text('MONOLITH MEDIA', rightX, rightY, { width: 200, align: 'left' });
-      doc.font('Helvetica').fontSize(10).fillColor(textMuted).text('monolithmedia.digital', rightX, rightY + 35);
-      doc.text('Holding 26,1, Road Goyalkhali,\nBoyra, Stamp Khulna GPO', rightX, rightY + 50, { lineGap: 3 });
+      
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('Bill From :', rightX, rightY + 35);
+      doc.font('Helvetica').fontSize(10).fillColor(textMuted).text('MST POLY KHATUN', rightX, rightY + 55);
+      doc.text('Holding 26,1, Road Goyalkhali,\nBoyra, Stamp Khulna GPO', rightX, rightY + 70, { lineGap: 3 });
 
       const billToY = dateY;
       doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('Bill To:', rightX, billToY);
-      doc.font('Helvetica').fontSize(12).text(invoiceData.clientName || 'Client Name', rightX, billToY + 20);
-      doc.text(invoiceData.clientEmail || 'client@example.com', rightX, billToY + 40);
+      doc.font('Helvetica').fontSize(10).text(invoiceData.clientName || 'Client Name', rightX, billToY + 20);
+      doc.text(invoiceData.clientEmail || 'client@example.com', rightX, billToY + 35);
 
       // --- TABLE SECTION ---
       const tableY = 280;
@@ -130,6 +132,11 @@ export async function generateInvoiceBuffer(invoiceData) {
 
       doc.fillColor(textMuted).font('Helvetica').fontSize(14).text('Grand Total', col3X - 40, totalsY + 75, { width: 100, align: 'left' });
       doc.fillColor(white).font('Helvetica-Bold').fontSize(18).text(invoiceData.total || '$0', col4X, totalsY + 73, { width: 70, align: 'center' });
+
+      // --- TERMS & CONDITIONS ---
+      const termsY = tableY + tableHeight + 30;
+      doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('Terms & Conditions', marginX, termsY);
+      doc.fillColor(textMuted).font('Helvetica').fontSize(10).text('1. Payment is due upon receipt of this invoice.\n2. Please mention the invoice number when making a payment.\n3. All sales are final.', marginX, termsY + 20, { width: 300, lineGap: 4 });
 
       doc.end();
     } catch (error) {
