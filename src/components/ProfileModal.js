@@ -341,6 +341,14 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
                       </div>
                     </>
                   )}
+                  {selectedPaymentMethod && (
+                    <div style={{ padding: '10px 12px', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '6px', display: 'flex', gap: '8px', alignItems: 'flex-start', marginTop: '12px' }}>
+                      <AlertTriangle size={16} color="#f59e0b" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.85)', lineHeight: '1.4' }}>
+                        <strong style={{ color: '#f59e0b' }}>Important:</strong> Please double-check your payment details. Providing incorrect information will result in payout delays or permanent loss of funds.
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 

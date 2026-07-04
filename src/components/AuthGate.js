@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, Suspense, useTransition } from 'react';
-import { Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, AlertTriangle } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from './AuthContext';
 import { login, requestSignupOtp, verifySignupOtpAndCreateUser, requestResetOtp, resetPasswordWithOtp, validateInvite, verifyLoginOtpAndLogin } from '@/actions/auth';
@@ -287,6 +287,14 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
                         <input type="text" placeholder="Name on Binance *" value={binanceName} onChange={(e) => setBinanceName(e.target.value)} style={{ paddingLeft: '12px' }} required />
                       </div>
                     </>
+                  )}
+                  {selectedPaymentMethod && (
+                    <div style={{ padding: '10px 12px', background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.2)', borderRadius: '6px', display: 'flex', gap: '8px', alignItems: 'flex-start', marginTop: '4px' }}>
+                      <AlertTriangle size={16} color="#f59e0b" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.85)', lineHeight: '1.4' }}>
+                        <strong style={{ color: '#f59e0b' }}>Important:</strong> Please double-check your payment details. Providing incorrect information will result in payout delays or permanent loss of funds.
+                      </div>
+                    </div>
                   )}
                 </>
               )}
