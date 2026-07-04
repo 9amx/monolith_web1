@@ -1437,8 +1437,8 @@ input:-webkit-autofill:active {
    ========================================================== */
 @media (max-width: 520px) {
   /* Modal */
-  .invite-modal-overlay { padding: 12px; align-items: flex-end; }
-  .invite-modal-content { padding: 24px 18px; border-radius: 16px 16px 0 0; max-width: 100%; max-height: 90vh; overflow-y: auto; }
+  .invite-modal-overlay { padding: 12px; align-items: center; }
+  .invite-modal-content { padding: 24px 18px; border-radius: 16px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
   .invite-header h2 { font-size: 18px; }
   .invite-icon-wrapper { width: 48px; height: 48px; margin-bottom: 12px; }
 
