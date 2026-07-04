@@ -1575,14 +1575,16 @@ export default function CardModal({
                 </div>
               )}
               {/* Footer */}
-              <div className="cm-footer">
-                <button
-                  className="cm-delete-btn"
-                  onClick={() => onDelete(card.id)}
-                >
-                  <Trash2 size={14} /> Delete Card
-                </button>
-              </div>
+              {canEdit && (
+                <div className="cm-footer">
+                  <button
+                    className="cm-delete-btn"
+                    onClick={() => onDelete(card.id)}
+                  >
+                    <Trash2 size={14} /> Delete Card
+                  </button>
+                </div>
+              )}
 
               {/* Editor Payment Display */}
               {card.deliveredDuration && card.ratePerMinute ? (
