@@ -98,6 +98,11 @@ export default function TeamManagementModal({ isOpen, onClose }) {
                         </div>
                         <div className="team-member-email" style={{ color: 'var(--emerald)' }}>
                           @{u.username || u.email.split('@')[0]}
+                          {(isAdmin || isSuperAdmin) && (
+                            <span style={{ color: 'var(--text-muted)', marginLeft: '8px', fontSize: '0.85em', fontWeight: 'normal' }}>
+                              ({u.email})
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
