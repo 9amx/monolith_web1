@@ -154,6 +154,15 @@ export async function deleteColumn(colId) {
   const user = await getCurrentUser();
   if (!user) throw new Error("Unauthorized");
   
+  // Find all cards in this column
+  const cardsInCol = await db.select({ id: cards.id }).from(cards).where(eq(cards.columnId, colId));
+  const cardIds = cardsInCol.map(c => c.id);
+
+  if (cardIds.length > 0) {
+    // Delete all submissions associated with these cards
+    await db.delete(submissions).where(inArray(submissions.cardId, cardIds));
+  }
+
   // First delete all cards in the column
   await db.delete(cards).where(eq(cards.columnId, colId));
   // Then delete the column
