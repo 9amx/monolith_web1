@@ -5,6 +5,7 @@ import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from './AuthContext';
 import { login, requestSignupOtp, verifySignupOtpAndCreateUser, requestResetOtp, resetPasswordWithOtp, validateInvite, verifyLoginOtpAndLogin } from '@/actions/auth';
+import CustomSelect from './CustomSelect';
 
 function AuthContent({ children, title, subtitle, isDashboard }) {
   const { currentUser, isAuthLoaded } = useAuth();
@@ -222,22 +223,22 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
                 <>
                   <div className="auth-input-group" style={{ flexDirection: 'column', alignItems: 'flex-start', padding: '12px' }}>
                     <label style={{ fontSize: '13px', color: 'var(--text-grey)', marginBottom: '8px' }}>Payment Method Required</label>
-                    <select 
+                    <CustomSelect 
                       value={selectedPaymentMethod} 
-                      onChange={(e) => {
-                        setSelectedPaymentMethod(e.target.value);
+                      onChange={(val) => {
+                        setSelectedPaymentMethod(val);
                         setBankDetails('');
                         setRocketAccount('');
                         setBinancePayId('');
                       }}
-                      style={{ width: '100%', background: 'transparent', border: 'none', color: selectedPaymentMethod ? '#fff' : 'var(--text-grey)', outline: 'none', cursor: 'pointer' }}
-                      required
-                    >
-                      <option value="" disabled>Choose a payment method...</option>
-                      <option value="bank" style={{ color: '#000' }}>Bank Account</option>
-                      <option value="rocket" style={{ color: '#000' }}>Rocket Account</option>
-                      <option value="binance" style={{ color: '#000' }}>Binance Pay</option>
-                    </select>
+                      options={[
+                        { value: '', label: 'Choose a payment method...' },
+                        { value: 'bank', label: 'Bank Account' },
+                        { value: 'rocket', label: 'Rocket Account' },
+                        { value: 'binance', label: 'Binance Pay' }
+                      ]}
+                      style={{ width: '100%' }}
+                    />
                   </div>
                   {selectedPaymentMethod === 'bank' && (
                     <div className="auth-input-group">

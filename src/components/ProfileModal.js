@@ -5,6 +5,7 @@ import { X, User, AtSign, Camera, Check, Loader2, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from './AuthContext';
 import { updateUserProfile, changePassword } from '@/actions/auth';
+import CustomSelect from './CustomSelect';
 
 export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
   const { currentUser } = useAuth();
@@ -262,21 +263,22 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
               {currentUser?.role === 'Editor' && (
                 <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '16px' }}>
                   <label style={{ fontSize: '13px', color: 'var(--text-grey)', marginBottom: '12px', display: 'block', fontWeight: 600 }}>Payment Method (For Editor Payouts)</label>
-                  <select 
+                  <CustomSelect 
                     value={selectedPaymentMethod} 
-                    onChange={(e) => {
-                      setSelectedPaymentMethod(e.target.value);
-                      if (e.target.value !== 'bank') setBankDetails('');
-                      if (e.target.value !== 'rocket') setRocketAccount('');
-                      if (e.target.value !== 'binance') setBinancePayId('');
+                    onChange={(val) => {
+                      setSelectedPaymentMethod(val);
+                      if (val !== 'bank') setBankDetails('');
+                      if (val !== 'rocket') setRocketAccount('');
+                      if (val !== 'binance') setBinancePayId('');
                     }}
-                    style={{ width: '100%', background: 'var(--bg-dark)', border: '1px solid rgba(255,255,255,0.1)', color: selectedPaymentMethod ? '#fff' : 'var(--text-grey)', outline: 'none', padding: '10px 12px', borderRadius: '6px', marginBottom: '12px', cursor: 'pointer' }}
-                  >
-                    <option value="" disabled>Choose a payment method...</option>
-                    <option value="bank" style={{ color: '#000' }}>Bank Account</option>
-                    <option value="rocket" style={{ color: '#000' }}>Rocket Account</option>
-                    <option value="binance" style={{ color: '#000' }}>Binance Pay</option>
-                  </select>
+                    options={[
+                      { value: '', label: 'Choose a payment method...' },
+                      { value: 'bank', label: 'Bank Account' },
+                      { value: 'rocket', label: 'Rocket Account' },
+                      { value: 'binance', label: 'Binance Pay' }
+                    ]}
+                    style={{ width: '100%', marginBottom: '12px' }}
+                  />
 
                   {selectedPaymentMethod === 'bank' && (
                     <div className="profile-field" style={{ marginBottom: 0 }}>
