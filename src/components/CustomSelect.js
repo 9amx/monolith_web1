@@ -21,8 +21,8 @@ export default function CustomSelect({ value, onChange, options = [], className,
   if (!selectedOption) return null;
 
   return (
-    <div className="custom-select-container" style={style}>
-      <button 
+    <div className="custom-select-container" style={{ ...style, zIndex: isOpen ? 99999 : 1 }}>
+      <button  
         type="button" 
         className={`custom-select-trigger ${className || ''}`.trim()}
         onClick={() => setIsOpen(!isOpen)}
