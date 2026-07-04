@@ -9,10 +9,21 @@ import { useAuth } from './AuthContext';
 export default function KanbanCard({ card, index, teamMembers, clients = [], onClick, onDelete, canEdit, isClone, provided, snapshot }) {
   const { isSuperAdmin } = useAuth();
   const cardLabels = (card.labels || []).map(id => LABELS.find(l => l.id === id)).filter(Boolean);
-  const cardMembers = (card.assignees || []).map(id => teamMembers.find(m => m.id === id)).filter(Boolean);
+  const cardMembers = (card.assignees || []).map(id => teamMembers.find(m => String(m.id) === String(id))).filter(Boolean);
   const commentCount = (card.comments || []).length;
   const checklistTotal = (card.checklist || []).length;
   const checklistDone = (card.checklist || []).filter(i => i.done).length;
+
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  };
+  
+  const getAvatarBg = (name) => {
+    const colors = ['#f43f5e', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b'];
+    const idx = name ? name.length % colors.length : 0;
+    return colors[idx];
+  };
   
   const client = clients.find(c => c.id === card.clientId);
 
@@ -57,8 +68,8 @@ export default function KanbanCard({ card, index, teamMembers, clients = [], onC
             {cardMembers.length > 0 && (
               <div className="kanban-card-avatars" style={{ flexShrink: 0, marginLeft: '8px' }}>
                 {cardMembers.map(m => (
-                  <div key={m.id} className="kanban-avatar" style={{ background: m.avatarUrl ? `url(${m.avatarUrl}) center/cover` : m.gradient, width: '20px', height: '20px', fontSize: '9px' }} title={m.name}>
-                    {!m.avatarUrl && m.initials}
+                  <div key={m.id} className="kanban-avatar" style={{ background: m.avatarUrl ? `url(${m.avatarUrl}) center/cover` : (m.gradient || getAvatarBg(m.name)), width: '20px', height: '20px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', borderRadius: '50%' }} title={m.name}>
+                    {!m.avatarUrl && (m.initials || getInitials(m.name))}
                   </div>
                 ))}
               </div>
