@@ -356,6 +356,11 @@ export async function submitProject(cardId, clientId, videoLink, duration, edito
   const [card] = await db.select().from(cards).where(eq(cards.id, cardId));
   if (!card) return { success: false, error: "Card not found" };
 
+  const assignees = typeof card.assignees === 'string' ? JSON.parse(card.assignees) : (card.assignees || []);
+  if (assignees.length === 0) {
+    return { success: false, error: "No editor assigned. You must assign an editor before delivering the video." };
+  }
+
   const [client] = await db.select().from(clients).where(eq(clients.id, clientId));
   if (!client) throw new Error("Client not found");
 

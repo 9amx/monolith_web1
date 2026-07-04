@@ -319,6 +319,12 @@ export default function CardModal({
       return;
     }
 
+    const currentAssignees = typeof card.assignees === 'string' ? JSON.parse(card.assignees) : (card.assignees || []);
+    if (currentAssignees.length === 0) {
+      setDeliveryMsg("Cannot deliver: No editor is assigned to this project. Please assign an editor first.");
+      return;
+    }
+
     setIsSubmittingDelivery(true);
     setDeliveryMsg("");
     try {
