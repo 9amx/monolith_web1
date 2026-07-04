@@ -120,9 +120,9 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
     name !== (currentUser?.name || '') || 
     username !== (currentUser?.username || '') || 
     avatarUrl !== (currentUser?.avatarUrl || '') ||
-    (selectedPaymentMethod === 'bank' ? bankDetails : '') !== (currentUser?.bankDetails || '') ||
-    (selectedPaymentMethod === 'rocket' ? rocketAccount : '') !== (currentUser?.rocketAccount || '') ||
-    (selectedPaymentMethod === 'binance' ? binancePayId : '') !== (currentUser?.binancePayId || '') ||
+    (selectedPaymentMethod === 'bank' ? JSON.stringify({ bankName, accountNumber: bankAccountNumber, holderName: bankHolderName }) : '') !== (currentUser?.bankDetails || '') ||
+    (selectedPaymentMethod === 'rocket' ? JSON.stringify({ rocketNumber, rocketName }) : '') !== (currentUser?.rocketAccount || '') ||
+    (selectedPaymentMethod === 'binance' ? JSON.stringify({ binancePayId, binanceName }) : '') !== (currentUser?.binancePayId || '') ||
     newPassword.length > 0;
 
   return (
