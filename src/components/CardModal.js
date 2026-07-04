@@ -349,7 +349,7 @@ export default function CardModal({
         setDeliveryDuration("");
         setLocalDeliveredDuration(deliveryDuration);
       } else {
-        setDeliveryMsg("Failed to deliver project.");
+        setDeliveryMsg(res.error || "Failed to deliver project.");
       }
     } catch (e) {
       setDeliveryMsg(e.message || "Error occurred");
