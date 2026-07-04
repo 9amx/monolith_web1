@@ -183,6 +183,13 @@ export default function CardModal({
 
   const toggleMember = (memberId) => {
     const current = card.assignees || [];
+    const isAdding = !current.includes(memberId);
+    
+    if (isAdding && (!deadlineHours || isNaN(parseInt(deadlineHours)))) {
+      showToast("Please set a Deadline (Timer) before assigning an editor.");
+      return;
+    }
+
     const updated = current.includes(memberId)
       ? current.filter((m) => m !== memberId)
       : [...current, memberId];
