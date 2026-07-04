@@ -136,7 +136,7 @@ export async function generateInvoiceBuffer(invoiceData) {
       // --- TERMS & CONDITIONS ---
       const termsY = tableY + tableHeight + 30;
       doc.fillColor(white).font('Helvetica-Bold').fontSize(12).text('Terms & Conditions', marginX, termsY);
-      doc.fillColor(textMuted).font('Helvetica').fontSize(10).text('1. Payment is due upon receipt of this invoice.\n2. Please mention the invoice number when making a payment.\n3. All sales are final.', marginX, termsY + 20, { width: 300, lineGap: 4 });
+      doc.fillColor(textMuted).font('Helvetica').fontSize(10).text('1. Payment is due upon receipt of this invoice.\n2. Revisions are subject to the originally agreed-upon project scope.\n3. Final delivery constitutes acceptance of the edited material.\n4. All sales are final for rendered video services.', marginX, termsY + 20, { width: 400, lineGap: 4 });
 
       doc.end();
     } catch (error) {
