@@ -357,6 +357,27 @@ export default function CardModal({
     setIsSubmittingDelivery(false);
   };
 
+  const timerBlockJSX = (!!card.timerStartedAt && !!card.deadlineHours && !localDeliveredDuration) ? (
+    <div style={{ padding: "12px", background: "rgba(255,255,255,0.03)", borderRadius: "6px", fontSize: "13px", marginBottom: "16px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "8px" }}>
+        <span style={{ color: "var(--text-grey)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Timer</span>
+        <span style={{ color: timerDisplay.includes('overdue') ? "var(--red, #ef4444)" : "var(--emerald)", fontWeight: 600, fontSize: "15px" }}>
+          {timerDisplay || "Calculating..."}
+        </span>
+      </div>
+      <div style={{ color: "var(--text-grey)", fontSize: "11px" }}>
+        Started: {new Date(card.timerStartedAt).toLocaleString()}
+      </div>
+    </div>
+  ) : null;
+
+  const penaltyBlockJSX = (card.penaltyPercent > 0) ? (
+    <div style={{ padding: "12px", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", borderRadius: "6px", marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <span style={{ color: "#ef4444", fontWeight: 600, fontSize: "11px" }}>LATE PENALTY</span>
+      <span style={{ color: "#ef4444", fontWeight: 700, fontSize: "14px" }}>-{card.penaltyPercent}%</span>
+    </div>
+  ) : null;
+
   return (
     <div className="cm-overlay" ref={overlayRef} onClick={handleOverlayClick}>
       <div className="cm-panel">
@@ -374,6 +395,10 @@ export default function CardModal({
           <div className="cm-layout">
             {/* MAIN CONTENT */}
             <div className="cm-main">
+              <div className="cm-timer-mobile">
+                {timerBlockJSX}
+                {penaltyBlockJSX}
+              </div>
               {/* Title */}
               {canEdit ? (
                 <input
@@ -1513,67 +1538,10 @@ export default function CardModal({
                   )}
                 </div>
               </div>
-              {!!card.timerStartedAt && !!card.deadlineHours && !localDeliveredDuration && (
-                <div
-                  style={{
-                    padding: "12px",
-                    background: "rgba(255,255,255,0.03)",
-                    borderRadius: "6px",
-                    fontSize: "13px",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "4px",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <span style={{ color: "var(--text-grey)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Timer</span>
-                    <span style={{ color: timerDisplay.includes('overdue') ? "var(--red, #ef4444)" : "var(--emerald)", fontWeight: 600, fontSize: "15px" }}>
-                      {timerDisplay || "Calculating..."}
-                    </span>
-                  </div>
-                  <div style={{ color: "var(--text-grey)", fontSize: "11px" }}>
-                    Started: {new Date(card.timerStartedAt).toLocaleString()}
-                  </div>
-                </div>
-              )}
-              {card.penaltyPercent > 0 && (
-                <div
-                  style={{
-                    padding: "12px",
-                    background: "rgba(239, 68, 68, 0.1)",
-                    border: "1px solid rgba(239, 68, 68, 0.2)",
-                    borderRadius: "6px",
-                    marginBottom: "16px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#ef4444",
-                      fontWeight: 600,
-                      fontSize: "11px",
-                    }}
-                  >
-                    LATE PENALTY
-                  </span>
-                  <span
-                    style={{
-                      color: "#ef4444",
-                      fontWeight: 700,
-                      fontSize: "14px",
-                    }}
-                  >
-                    -{card.penaltyPercent}%
-                  </span>
-                </div>
-              )}
+              <div className="cm-timer-desktop">
+                {timerBlockJSX}
+                {penaltyBlockJSX}
+              </div>
               {/* Footer */}
               {canEdit && (
                 <div className="cm-footer">
