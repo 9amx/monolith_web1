@@ -23,9 +23,17 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [name, setName] = useState('');
-  const [bankDetails, setBankDetails] = useState('');
-  const [rocketAccount, setRocketAccount] = useState('');
+  
+  const [bankName, setBankName] = useState('');
+  const [bankAccountNumber, setBankAccountNumber] = useState('');
+  const [bankHolderName, setBankHolderName] = useState('');
+  
+  const [rocketNumber, setRocketNumber] = useState('');
+  const [rocketName, setRocketName] = useState('');
+  
   const [binancePayId, setBinancePayId] = useState('');
+  const [binanceName, setBinanceName] = useState('');
+  
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -76,7 +84,14 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
     
     startTransition(async () => {
       if (isVerifyingSignupOtp) {
-        const paymentDetails = inviteRole === 'Editor' ? { bankDetails, rocketAccount, binancePayId } : {};
+        let finalBankDetails = '';
+        if (selectedPaymentMethod === 'bank') finalBankDetails = JSON.stringify({ bankName, accountNumber: bankAccountNumber, holderName: bankHolderName });
+        let finalRocketAccount = '';
+        if (selectedPaymentMethod === 'rocket') finalRocketAccount = JSON.stringify({ rocketNumber, rocketName });
+        let finalBinancePayId = '';
+        if (selectedPaymentMethod === 'binance') finalBinancePayId = JSON.stringify({ binancePayId, binanceName });
+
+        const paymentDetails = inviteRole === 'Editor' ? { bankDetails: finalBankDetails, rocketAccount: finalRocketAccount, binancePayId: finalBinancePayId } : {};
         const res = await verifySignupOtpAndCreateUser(email, otp, password, name, inviteToken, paymentDetails);
         if (res.error) {
           setError(res.error);
@@ -227,9 +242,9 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
                       value={selectedPaymentMethod} 
                       onChange={(val) => {
                         setSelectedPaymentMethod(val);
-                        setBankDetails('');
-                        setRocketAccount('');
-                        setBinancePayId('');
+                        setBankName(''); setBankAccountNumber(''); setBankHolderName('');
+                        setRocketNumber(''); setRocketName('');
+                        setBinancePayId(''); setBinanceName('');
                       }}
                       options={[
                         { value: '', label: 'Choose a payment method...' },
@@ -241,40 +256,37 @@ function AuthContent({ children, title, subtitle, isDashboard }) {
                     />
                   </div>
                   {selectedPaymentMethod === 'bank' && (
-                    <div className="auth-input-group">
-                      <input
-                        type="text"
-                        placeholder="Bank Account Details *"
-                        value={bankDetails}
-                        onChange={(e) => setBankDetails(e.target.value)}
-                        style={{ paddingLeft: '12px' }}
-                        required
-                      />
-                    </div>
+                    <>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Bank Name *" value={bankName} onChange={(e) => setBankName(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Account Number *" value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Account Holder Name *" value={bankHolderName} onChange={(e) => setBankHolderName(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                    </>
                   )}
                   {selectedPaymentMethod === 'rocket' && (
-                    <div className="auth-input-group">
-                      <input
-                        type="text"
-                        placeholder="Rocket Account No. *"
-                        value={rocketAccount}
-                        onChange={(e) => setRocketAccount(e.target.value)}
-                        style={{ paddingLeft: '12px' }}
-                        required
-                      />
-                    </div>
+                    <>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Rocket Number (12 digit) *" value={rocketNumber} onChange={(e) => setRocketNumber(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Rocket Account Name *" value={rocketName} onChange={(e) => setRocketName(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                    </>
                   )}
                   {selectedPaymentMethod === 'binance' && (
-                    <div className="auth-input-group">
-                      <input
-                        type="text"
-                        placeholder="Binance Pay ID *"
-                        value={binancePayId}
-                        onChange={(e) => setBinancePayId(e.target.value)}
-                        style={{ paddingLeft: '12px' }}
-                        required
-                      />
-                    </div>
+                    <>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Binance Pay ID *" value={binancePayId} onChange={(e) => setBinancePayId(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                      <div className="auth-input-group">
+                        <input type="text" placeholder="Name on Binance *" value={binanceName} onChange={(e) => setBinanceName(e.target.value)} style={{ paddingLeft: '12px' }} required />
+                      </div>
+                    </>
                   )}
                 </>
               )}

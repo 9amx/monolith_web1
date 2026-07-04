@@ -220,6 +220,47 @@ const filterOptions = [
   { value: 'custom', label: 'Custom Range...' }
 ];
 
+const parsePaymentStr = (str) => {
+  if (!str) return null;
+  try {
+    const parsed = JSON.parse(str);
+    if (typeof parsed === 'object') return parsed;
+    return { raw: str };
+  } catch(e) {
+    return { raw: str };
+  }
+};
+
+const EditorPaymentDetailsView = ({ bank, rocket, binance }) => {
+  if (!bank && !rocket && !binance) return null;
+  const b = parsePaymentStr(bank);
+  const r = parsePaymentStr(rocket);
+  const bn = parsePaymentStr(binance);
+
+  return (
+    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
+      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-grey)', marginBottom: '4px', textTransform: 'uppercase' }}>Editor Payment Details</div>
+      {b && (
+        <div style={{ fontSize: '0.8rem', color: '#fff' }}>
+          <span style={{ color: 'var(--text-muted)' }}>Bank:</span>{' '}
+          {b.raw ? b.raw : `${b.bankName || ''} | A/C: ${b.accountNumber || ''} | Name: ${b.holderName || ''}`}
+        </div>
+      )}
+      {r && (
+        <div style={{ fontSize: '0.8rem', color: '#fff' }}>
+          <span style={{ color: 'var(--text-muted)' }}>Rocket:</span>{' '}
+          {r.raw ? r.raw : `${r.rocketNumber || ''} | Name: ${r.rocketName || ''}`}
+        </div>
+      )}
+      {bn && (
+        <div style={{ fontSize: '0.8rem', color: '#fff' }}>
+          <span style={{ color: 'var(--text-muted)' }}>Binance:</span>{' '}
+          {bn.raw ? bn.raw : `Pay ID: ${bn.binancePayId || ''} | Name: ${bn.binanceName || ''}`}
+        </div>
+      )}
+    </div>
+  );
+};
 
 function DashboardContent() {
   const [isMounted, setIsMounted] = useState(false);
@@ -1054,14 +1095,7 @@ function DashboardContent() {
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Client Payment Amount: <strong style={{ color: '#fff' }}>${sub.clientPaymentAmount}</strong></span>
                             )}
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Editor: {sub.editorName ? `${sub.editorName} (${sub.editorEmail})` : sub.editorEmail}</span>
-                            {(sub.editorBankDetails || sub.editorRocketAccount || sub.editorBinancePayId) && (
-                              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-grey)', marginBottom: '4px', textTransform: 'uppercase' }}>Editor Payment Details</div>
-                                {sub.editorBankDetails && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Bank:</span> {sub.editorBankDetails}</div>}
-                                {sub.editorRocketAccount && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Rocket:</span> {sub.editorRocketAccount}</div>}
-                                {sub.editorBinancePayId && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Binance Pay ID:</span> {sub.editorBinancePayId}</div>}
-                              </div>
-                            )}
+                            <EditorPaymentDetailsView bank={sub.editorBankDetails} rocket={sub.editorRocketAccount} binance={sub.editorBinancePayId} />
                             {sub.deliveredDuration && (
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                                 Duration: <strong style={{ color: '#fff' }}>{sub.deliveredDuration} minutes</strong>
@@ -1169,14 +1203,7 @@ function DashboardContent() {
                               <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Client Payment Amount: <strong style={{ color: '#fff' }}>${sub.clientPaymentAmount}</strong></span>
                             )}
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Editor: {sub.editorName ? `${sub.editorName} (${sub.editorEmail})` : sub.editorEmail}</span>
-                            {(sub.editorBankDetails || sub.editorRocketAccount || sub.editorBinancePayId) && (
-                              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)', marginTop: '4px' }}>
-                                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-grey)', marginBottom: '4px', textTransform: 'uppercase' }}>Editor Payment Details</div>
-                                {sub.editorBankDetails && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Bank:</span> {sub.editorBankDetails}</div>}
-                                {sub.editorRocketAccount && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Rocket:</span> {sub.editorRocketAccount}</div>}
-                                {sub.editorBinancePayId && <div style={{ fontSize: '0.8rem', color: '#fff' }}><span style={{ color: 'var(--text-muted)' }}>Binance Pay ID:</span> {sub.editorBinancePayId}</div>}
-                              </div>
-                            )}
+                            <EditorPaymentDetailsView bank={sub.editorBankDetails} rocket={sub.editorRocketAccount} binance={sub.editorBinancePayId} />
                             <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Duration: <strong style={{ color: '#fff' }}>{sub.deliveredDuration || 0} minutes</strong></span>
                             {(sub.ratePerMinute && sub.deliveredDuration) && (
                               <span style={{ color: 'var(--emerald)', fontSize: '0.85rem', fontWeight: 600 }}>

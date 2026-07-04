@@ -16,9 +16,16 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
   const [avatarUrl, setAvatarUrl] = useState('');
   const [newPassword, setNewPassword] = useState('');
   
-  const [bankDetails, setBankDetails] = useState('');
-  const [rocketAccount, setRocketAccount] = useState('');
+  const [bankName, setBankName] = useState('');
+  const [bankAccountNumber, setBankAccountNumber] = useState('');
+  const [bankHolderName, setBankHolderName] = useState('');
+
+  const [rocketNumber, setRocketNumber] = useState('');
+  const [rocketName, setRocketName] = useState('');
+
   const [binancePayId, setBinancePayId] = useState('');
+  const [binanceName, setBinanceName] = useState('');
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   
   const [isSaving, setIsSaving] = useState(false);
@@ -30,9 +37,24 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
       setUsername(currentUser.username || '');
       setAvatarUrl(currentUser.avatarUrl || '');
       
-      setBankDetails(currentUser.bankDetails || '');
-      setRocketAccount(currentUser.rocketAccount || '');
-      setBinancePayId(currentUser.binancePayId || '');
+      let initialBank = { bankName: '', accountNumber: '', holderName: '' };
+      try { initialBank = JSON.parse(currentUser.bankDetails); } catch(e) {}
+      
+      let initialRocket = { rocketNumber: '', rocketName: '' };
+      try { initialRocket = JSON.parse(currentUser.rocketAccount); } catch(e) {}
+      
+      let initialBinance = { binancePayId: '', binanceName: '' };
+      try { initialBinance = JSON.parse(currentUser.binancePayId); } catch(e) {}
+
+      setBankName(initialBank.bankName || currentUser.bankDetails || '');
+      setBankAccountNumber(initialBank.accountNumber || '');
+      setBankHolderName(initialBank.holderName || '');
+
+      setRocketNumber(initialRocket.rocketNumber || currentUser.rocketAccount || '');
+      setRocketName(initialRocket.rocketName || '');
+
+      setBinancePayId(initialBinance.binancePayId || currentUser.binancePayId || '');
+      setBinanceName(initialBinance.binanceName || '');
       
       if (currentUser.bankDetails) setSelectedPaymentMethod('bank');
       else if (currentUser.rocketAccount) setSelectedPaymentMethod('rocket');
@@ -58,13 +80,20 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
     setIsSaving(true);
     setSaveMessage(null);
     try {
+      let finalBankDetails = '';
+      if (selectedPaymentMethod === 'bank') finalBankDetails = JSON.stringify({ bankName, accountNumber: bankAccountNumber, holderName: bankHolderName });
+      let finalRocketAccount = '';
+      if (selectedPaymentMethod === 'rocket') finalRocketAccount = JSON.stringify({ rocketNumber, rocketName });
+      let finalBinancePayId = '';
+      if (selectedPaymentMethod === 'binance') finalBinancePayId = JSON.stringify({ binancePayId, binanceName });
+
       const res = await updateUserProfile({ 
         name, 
         username, 
         avatarUrl,
-        bankDetails: selectedPaymentMethod === 'bank' ? bankDetails : null,
-        rocketAccount: selectedPaymentMethod === 'rocket' ? rocketAccount : null,
-        binancePayId: selectedPaymentMethod === 'binance' ? binancePayId : null
+        bankDetails: finalBankDetails,
+        rocketAccount: finalRocketAccount,
+        binancePayId: finalBinancePayId
       });
       let passRes = { success: true };
       if (newPassword.trim()) {
@@ -267,9 +296,9 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
                     value={selectedPaymentMethod} 
                     onChange={(val) => {
                       setSelectedPaymentMethod(val);
-                      if (val !== 'bank') setBankDetails('');
-                      if (val !== 'rocket') setRocketAccount('');
-                      if (val !== 'binance') setBinancePayId('');
+                      setBankName(''); setBankAccountNumber(''); setBankHolderName('');
+                      setRocketNumber(''); setRocketName('');
+                      setBinancePayId(''); setBinanceName('');
                     }}
                     options={[
                       { value: '', label: 'Choose a payment method...' },
@@ -281,37 +310,37 @@ export default function ProfileModal({ isOpen, onClose, onProfileUpdated }) {
                   />
 
                   {selectedPaymentMethod === 'bank' && (
-                    <div className="profile-field" style={{ marginBottom: 0 }}>
-                      <input
-                        type="text"
-                        placeholder="Bank Account Details"
-                        value={bankDetails}
-                        onChange={(e) => setBankDetails(e.target.value)}
-                        style={{ marginTop: 0 }}
-                      />
-                    </div>
+                    <>
+                      <div className="profile-field" style={{ marginBottom: '12px' }}>
+                        <input type="text" placeholder="Bank Name" value={bankName} onChange={(e) => setBankName(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                      <div className="profile-field" style={{ marginBottom: '12px' }}>
+                        <input type="text" placeholder="Account Number" value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                      <div className="profile-field" style={{ marginBottom: 0 }}>
+                        <input type="text" placeholder="Account Holder Name" value={bankHolderName} onChange={(e) => setBankHolderName(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                    </>
                   )}
                   {selectedPaymentMethod === 'rocket' && (
-                    <div className="profile-field" style={{ marginBottom: 0 }}>
-                      <input
-                        type="text"
-                        placeholder="Rocket Account No."
-                        value={rocketAccount}
-                        onChange={(e) => setRocketAccount(e.target.value)}
-                        style={{ marginTop: 0 }}
-                      />
-                    </div>
+                    <>
+                      <div className="profile-field" style={{ marginBottom: '12px' }}>
+                        <input type="text" placeholder="Rocket Number (12 digit)" value={rocketNumber} onChange={(e) => setRocketNumber(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                      <div className="profile-field" style={{ marginBottom: 0 }}>
+                        <input type="text" placeholder="Rocket Account Name" value={rocketName} onChange={(e) => setRocketName(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                    </>
                   )}
                   {selectedPaymentMethod === 'binance' && (
-                    <div className="profile-field" style={{ marginBottom: 0 }}>
-                      <input
-                        type="text"
-                        placeholder="Binance Pay ID"
-                        value={binancePayId}
-                        onChange={(e) => setBinancePayId(e.target.value)}
-                        style={{ marginTop: 0 }}
-                      />
-                    </div>
+                    <>
+                      <div className="profile-field" style={{ marginBottom: '12px' }}>
+                        <input type="text" placeholder="Binance Pay ID" value={binancePayId} onChange={(e) => setBinancePayId(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                      <div className="profile-field" style={{ marginBottom: 0 }}>
+                        <input type="text" placeholder="Name on Binance" value={binanceName} onChange={(e) => setBinanceName(e.target.value)} style={{ marginTop: 0 }} />
+                      </div>
+                    </>
                   )}
                 </div>
               )}
